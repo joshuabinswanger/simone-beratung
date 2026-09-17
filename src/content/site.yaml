@@ -1,0 +1,263 @@
+# Redaktionelle Inhalte der Website. Diese Datei lässt sich ohne
+# Programmierkenntnisse bearbeiten. Struktur bitte beibehalten.
+
+name: "Simone Binswanger"
+credentials: "lic. iur. · Sozialarbeiterin · CAS Spiritual Care"
+tagline: "Spirituelle Beratung & Begleitung"
+description: "Spirituelle und psychosoziale Beratung in Winterthur: Begleitung in komplexen Situationen – differenziert, pragmatisch und lösungsorientiert."
+location: "Winterthur"
+
+contact:
+  email: "kontakt@example.ch"
+  phone: "+41 00 000 00 00"
+  address:
+    - "Praxisadresse folgt"
+    - "8400 Winterthur"
+  formEndpoint: ""
+
+nav:
+  - label: "Start"
+    href: "/"
+  - label: "Angebot"
+    href: "/angebot/"
+  - label: "Über mich"
+    href: "/ueber-mich/"
+  - label: "Kontakt"
+    href: "/kontakt/"
+
+hero:
+  prefix: "Raum für"
+  words:
+    - "Klarheit"
+    - "Orientierung"
+    - "Entscheidungen"
+    - "Entwicklung"
+    - "Begleitung"
+    - "Zuversicht"
+  lead: >-
+    Ich begleite Menschen in komplexen privaten und beruflichen Situationen: Wir erfassen
+    Ihre Lage differenziert und entwickeln gemeinsam Lösungen, die für Sie machbar sind.
+  primaryCta:
+    label: "Gespräch vereinbaren"
+    href: "/kontakt/"
+  secondaryCta:
+    label: "Angebot ansehen"
+    href: "/angebot/"
+
+values:
+  - title: "pragmatisch"
+    text: >-
+      Wir bleiben nah an Ihrer Wirklichkeit. Am Ende steht kein Idealbild, sondern ein
+      nächster Schritt, den Sie in Ihrem Alltag tatsächlich gehen können.
+  - title: "interdisziplinär"
+    text: >-
+      Recht, Soziale Arbeit, Kindes- und Erwachsenenschutz, Mediation und Spiritual Care
+      fliessen in meine Arbeit ein. So lässt sich eine Situation auf mehreren Ebenen
+      zugleich betrachten.
+  - title: "lösungsorientiert"
+    text: >-
+      Ich schaue darauf, was bereits trägt und was noch fehlt. Ziel ist Hilfe zur
+      Selbsthilfe: Sie sollen Ihren Weg weitergehen können, ohne von mir abhängig zu werden.
+
+home:
+  pillarsTitle: "Wobei ich Sie unterstütze"
+  pillars:
+    - title: "Spirituelle Beratung & Begleitung"
+      text: >-
+        Raum für Fragen nach Sinn, Halt und Werten – besonders dort, wo Sie an Grenzen
+        stossen. Offen für alle Weltanschauungen und ohne konfessionelle Bindung.
+      href: "/angebot/"
+    - title: "Psychosoziale Beratung"
+      text: >-
+        Unterstützung in belastenden privaten und beruflichen Situationen, von Trennung und
+        Familie bis zu Arbeit und Arbeitslosigkeit. Wir ordnen, klären und planen konkrete
+        Schritte.
+      href: "/angebot/"
+    - title: "Entwicklung & Coaching"
+      text: >-
+        Begleitung bei Übergängen, Entscheidungen und Fragen der Führung. Sie stärken Ihre
+        Ressourcen und erweitern Ihren persönlichen Instrumentenkoffer.
+      href: "/angebot/"
+  approach:
+    title: "So arbeite ich"
+    intro: >-
+      Meine Arbeit folgt einem einfachen Ablauf: verstehen, ordnen, entwickeln, begleiten.
+      Das Tempo bestimmen Sie.
+    points:
+      - title: "Differenziert erfassen"
+        text: >-
+          Ich nehme Situationen ganzheitlich wahr – auf der sachlichen, der rechtlichen und
+          der persönlichen Ebene. Gemeinsam benennen wir, worum es wirklich geht.
+      - title: "Machbare Lösungen entwickeln"
+        text: >-
+          Wir suchen keine perfekte, sondern eine tragfähige Lösung: eine, die zu Ihren
+          Kräften, Ihrem Umfeld und Ihrem Zeitrahmen passt.
+      - title: "Schritt für Schritt begleiten"
+        text: >-
+          Das kann ein einzelnes oder zwei Gespräche umfassen oder eine längere Begleitung –
+          so lange, bis Sie Ihren Weg wieder selbst gehen können.
+      - title: "Ressourcen stärken, die richtigen Personen einbeziehen"
+        text: >-
+          Ich zeige Ihnen, worauf Sie bereits bauen können, und mache eine sinnvolle Triage:
+          Wo weitere Fachpersonen nötig sind, vermittle ich Sie gezielt weiter.
+  aboutTeaser:
+    title: "Wer Sie begleitet"
+    text: >-
+      Juristin, Sozialarbeiterin und Sozialpädagogin, langjährig tätig im Kindes- und
+      Erwachsenenschutz: als Beiständin, als Behördenmitglied und in der Leitung einer
+      Beratungsstelle rund um Arbeit und Arbeitslosigkeit. Dazu Mediation und ein CAS
+      Spiritual Care der Universität Bern.
+    cta:
+      label: "Mehr über mich"
+      href: "/ueber-mich/"
+  contactCta:
+    title: "Ein erstes Gespräch"
+    text: >-
+      Wenn Sie nicht sicher sind, ob mein Angebot zu Ihrer Situation passt: Schreiben Sie
+      mir kurz, worum es geht. Im Erstgespräch klären wir, was Ihnen weiterhilft.
+    cta:
+      label: "Kontakt aufnehmen"
+      href: "/kontakt/"
+
+angebot:
+  title: "Angebot"
+  intro: >-
+    Beratung, Begleitung und Coaching für Menschen in komplexen privaten und beruflichen
+    Situationen. Die Gespräche finden in einem geschützten Rahmen statt: vertraulich, ohne
+    Wertung und in Ihrem Tempo.
+  formatsTitle: "Formate"
+  formats:
+    - title: "Kurz und fokussiert"
+      text: >-
+        Ein bis zwei Gespräche, um eine Situation zu ordnen, eine Entscheidung vorzubereiten
+        oder eine zweite Sicht darauf zu erhalten. Oft genügt das bereits, um wieder
+        handlungsfähig zu werden.
+    - title: "Längere Begleitung"
+      text: >-
+        Eine Reihe von Gesprächen über Wochen oder Monate, wenn eine Situation vielschichtig
+        ist oder sich erst mit der Zeit klärt. Den Rhythmus vereinbaren wir gemeinsam und
+        überprüfen ihn regelmässig.
+  audiencesTitle: "Für wen"
+  audiences:
+    - title: "Einzelpersonen"
+      text: >-
+        Wenn Sie vor einer Entscheidung stehen, unter Druck geraten sind oder sich neu
+        orientieren möchten.
+    - title: "Paare"
+      text: >-
+        Wenn Sie wieder miteinander ins Gespräch kommen möchten, in einer
+        Trennungssituation oder bei Fragen, die Sie beide betreffen.
+    - title: "Familien"
+      text: >-
+        Wenn mehrere Generationen betroffen sind, etwa bei Betreuungs-, Trennungs- oder
+        Schutzfragen. Diese Situationen kenne ich aus langjähriger Praxis.
+    - title: "Gruppen und Teams"
+      text: >-
+        Wenn Belastungen, Konflikte oder Veränderungen anstehen und eine aussenstehende,
+        moderierende Person hilfreich ist.
+  topicsTitle: "Themen"
+  topics:
+    - "Arbeit und Arbeitslosigkeit"
+    - "Übergänge und Neuorientierung"
+    - "Trennung, Paar und Familie"
+    - "Fragen aus dem Kindes- und Erwachsenenschutz"
+    - "Entscheidungen und Weichenstellungen"
+    - "Sinn- und Glaubensfragen"
+    - "Belastung, Krisen und Grenzerfahrungen"
+    - "Führung und Rolle im Beruf"
+    - "Konflikte und schwierige Gespräche"
+    - "Trauer und Abschied"
+  processTitle: "Ablauf"
+  process:
+    - title: "Erstgespräch"
+      text: >-
+        Sie schildern, worum es geht. Wir klären, was Sie brauchen und ob ich die richtige
+        Ansprechperson für Sie bin.
+    - title: "Situation erfassen"
+      text: >-
+        Wir betrachten Ihre Lage differenziert und auf allen beteiligten Ebenen – sachlich,
+        rechtlich, persönlich – und benennen, worum es im Kern geht.
+    - title: "Lösungen entwickeln"
+      text: >-
+        Gemeinsam entwickeln wir Möglichkeiten, die für Sie machbar sind, und legen einen
+        ersten konkreten Schritt fest.
+    - title: "Begleiten oder weitervermitteln"
+      text: >-
+        Ich begleite Sie, solange es nötig ist, oder vermittle Sie an die Fachpersonen
+        weiter, die Sie an diesem Punkt am besten unterstützen.
+  costs:
+    title: "Rahmen und Kosten"
+    text: >-
+      Die Gespräche finden in Winterthur oder online statt und dauern in der Regel eine
+      Stunde. Das Honorar besprechen wir im Erstgespräch; die aktuellen Ansätze erhalten Sie
+      auf Anfrage. Alles, was zur Sprache kommt, bleibt vertraulich.
+
+ueberMich:
+  title: "Über mich"
+  lead: >-
+    Ich bin Juristin, Sozialarbeiterin und Sozialpädagogin und begleite Menschen seit über
+    dreissig Jahren in Situationen, die sich nicht mit einer einzigen Antwort lösen lassen.
+  paragraphs:
+    - >-
+      Mein Weg begann mit dem Studium der Rechtswissenschaft an der Universität Zürich und
+      führte dorthin, wo Recht und Lebenswirklichkeit aufeinandertreffen: in die
+      Sozialpädagogik, später in die Amtsvormundschaft und in die gesetzliche Sozialarbeit.
+      Als Beiständin und als Vormundschaftssekretärin habe ich Menschen in sehr
+      verletzlichen Lebenslagen begleitet.
+    - >-
+      Als Behördenmitglied einer Kindes- und Erwachsenenschutzbehörde habe ich erlebt, wie
+      viel davon abhängt, dass eine Situation zuerst sorgfältig verstanden und erst dann
+      entschieden wird. Seit 2016 arbeite ich bei der DFA, der kirchlichen Fachstelle bei
+      Arbeitslosigkeit in Winterthur, die ich seit 2021 als Standortleiterin führe. Dort
+      berate ich Menschen, deren berufliche und private Fragen sich nicht voneinander
+      trennen lassen.
+    - >-
+      Die Ausbildungen in Mediation und Familienmediation und das CAS Spiritual Care der
+      Universität Bern – ein interdisziplinäres Programm aus Theologie, Medizin und
+      Psychologie – haben meine Arbeit um eine weitere Ebene ergänzt: die Frage nach Sinn,
+      Halt und Werten, die in schwierigen Situationen oft im Hintergrund mitläuft.
+    - >-
+      Ich nehme Menschen ganzheitlich wahr, auf allen Ebenen und mit dem, was zwischen den
+      Zeilen steht. Das verdanke ich nicht nur meiner beruflichen Laufbahn, sondern auch
+      Erfahrungen in meiner eigenen Familie. Sie haben mir gezeigt, wie viel Kraft es
+      kostet, eine schwierige Situation zu tragen – und wie viel es verändert, wenn jemand
+      zuhört und mitdenkt.
+  haltung:
+    title: "Meine Haltung"
+    points:
+      - title: "Geschützter Rahmen"
+        text: >-
+          Was Sie mir anvertrauen, bleibt bei mir. Sie bestimmen, was zur Sprache kommt und
+          wie weit wir gehen.
+      - title: "Hilfe zur Selbsthilfe"
+        text: >-
+          Ich möchte Sie nicht von mir abhängig machen, sondern Ihre Ressourcen stärken und
+          mit Ihnen anschauen, welche Fähigkeiten Sie noch aufbauen können.
+      - title: "Klarheit über Zuständigkeiten"
+        text: >-
+          Nicht jede Frage gehört zu mir. Wo andere Fachpersonen besser unterstützen können,
+          sage ich das offen und helfe Ihnen, sie einzubeziehen.
+  languages:
+    - "Deutsch"
+    - "Französisch"
+    - "Englisch"
+    - "Italienisch"
+
+kontakt:
+  title: "Kontakt"
+  intro: >-
+    Schreiben Sie mir in wenigen Sätzen, worum es geht, oder rufen Sie an. Ich melde mich
+    zurück, und wir vereinbaren ein Erstgespräch in Winterthur oder online.
+  confidentiality: >-
+    Alle Gespräche finden in einem geschützten Rahmen statt. Ihre Angaben behandle ich
+    vertraulich und gebe sie ohne Ihr Einverständnis nicht weiter.
+  form:
+    name: "Name"
+    email: "E-Mail"
+    phone: "Telefon (optional)"
+    message: "Ihr Anliegen"
+    submit: "Nachricht senden"
+    success: "Vielen Dank für Ihre Nachricht. Ich melde mich in den nächsten Tagen bei Ihnen."
+
+footer:
+  note: "Spirituelle und psychosoziale Beratung für Einzelpersonen, Paare, Familien und Teams in Winterthur."

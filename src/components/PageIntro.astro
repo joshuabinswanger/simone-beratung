@@ -1,0 +1,39 @@
+---
+/** Kopfbereich für Unterseiten: Eyebrow, Titel, Lead-Text. */
+interface Props {
+  eyebrow?: string;
+  title: string;
+  lead?: string;
+}
+const { eyebrow, title, lead } = Astro.props;
+---
+
+<section class="intro">
+  <div class="wrap">
+    {eyebrow && <p class="eyebrow">{eyebrow}</p>}
+    <h1>{title}</h1>
+    {lead && <p class="lead">{lead}</p>}
+    <slot />
+  </div>
+</section>
+
+<style>
+  .intro {
+    padding-block: var(--space-xl) var(--space-l);
+    background:
+      radial-gradient(
+        50% 60% at 90% 0%,
+        color-mix(in srgb, var(--gold-soft) 45%, transparent),
+        transparent 70%
+      ),
+      var(--paper);
+  }
+
+  .intro h1 {
+    max-width: 22ch;
+  }
+
+  .intro :global(.lead) {
+    margin-top: var(--space-s);
+  }
+</style>

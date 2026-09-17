@@ -1,0 +1,243 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PageIntro from "../components/PageIntro.astro";
+import Icon from "../components/Icon.astro";
+import { site } from "../lib/site";
+
+const { kontakt, contact } = site;
+const tel = contact.phone.replace(/\s+/g, "");
+const hasForm = contact.formEndpoint.trim().length > 0;
+---
+
+<BaseLayout title={kontakt.title} description={kontakt.intro}>
+  <PageIntro eyebrow="Kontakt" title={kontakt.title} lead={kontakt.intro} />
+
+  <section class="section section--tight contact">
+    <div class="wrap contact__inner">
+      <div class="contact__details reveal">
+        <ul class="contact__list">
+          <li>
+            <Icon name="mail" />
+            <div>
+              <span class="contact__label">E-Mail</span>
+              <a href={`mailto:${contact.email}`}>{contact.email}</a>
+            </div>
+          </li>
+          <li>
+            <Icon name="phone" />
+            <div>
+              <span class="contact__label">Telefon</span>
+              <a href={`tel:${tel}`}>{contact.phone}</a>
+            </div>
+          </li>
+          <li>
+            <Icon name="pin" />
+            <div>
+              <span class="contact__label">Praxis</span>
+              {contact.address.map((line) => (
+                <span class="contact__line">{line}</span>
+              ))}
+            </div>
+          </li>
+        </ul>
+        <p class="contact__confidential">{kontakt.confidentiality}</p>
+      </div>
+
+      <div class="contact__form-wrap reveal">
+        {hasForm ? (
+          <form class="form" method="POST" action={contact.formEndpoint} data-form>
+            <div class="form__row">
+              <label for="f-name">{kontakt.form.name}</label>
+              <input id="f-name" name="name" type="text" required autocomplete="name" />
+            </div>
+            <div class="form__row">
+              <label for="f-email">{kontakt.form.email}</label>
+              <input id="f-email" name="email" type="email" required autocomplete="email" />
+            </div>
+            <div class="form__row">
+              <label for="f-phone">{kontakt.form.phone}</label>
+              <input id="f-phone" name="phone" type="tel" autocomplete="tel" />
+            </div>
+            <div class="form__row">
+              <label for="f-message">{kontakt.form.message}</label>
+              <textarea id="f-message" name="message" rows="6" required></textarea>
+            </div>
+            <input
+              type="text"
+              name="_gotcha"
+              tabindex="-1"
+              autocomplete="off"
+              class="visually-hidden"
+              aria-hidden="true"
+            />
+            <button class="btn btn--primary" type="submit">
+              {kontakt.form.submit}
+              <Icon name="arrow" />
+            </button>
+            <p class="form__success" hidden data-success>
+              {kontakt.form.success}
+            </p>
+          </form>
+        ) : (
+          <div class="contact__mail-card">
+            <h2>Schreiben Sie mir</h2>
+            <p>
+              Am einfachsten erreichen Sie mich per E-Mail. Ich melde mich in der Regel innerhalb
+              von zwei Arbeitstagen.
+            </p>
+            <a
+              class="btn btn--primary"
+              href={`mailto:${contact.email}?subject=${encodeURIComponent("Anfrage Beratung")}`}
+            >
+              E-Mail schreiben
+              <Icon name="mail" />
+            </a>
+          </div>
+        )}
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .contact__inner {
+    display: grid;
+    gap: var(--space-xl);
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+    align-items: start;
+  }
+
+  .contact__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-m);
+  }
+
+  .contact__list li {
+    display: grid;
+    grid-template-columns: 1.5rem 1fr;
+    gap: var(--space-s);
+    align-items: start;
+  }
+
+  .contact__list :global(svg) {
+    width: 1.35rem;
+    height: 1.35rem;
+    color: var(--gold);
+    margin-top: 0.15rem;
+  }
+
+  .contact__label {
+    display: block;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 0.75rem;
+    color: var(--teal);
+    margin-bottom: 0.15rem;
+  }
+
+  .contact__line {
+    display: block;
+    color: var(--ink-soft);
+  }
+
+  .contact__confidential {
+    margin-top: var(--space-l);
+    padding: var(--space-m);
+    border-left: 2px solid var(--gold);
+    background: var(--paper-deep);
+    color: var(--ink-soft);
+    border-radius: 0 var(--radius-l) var(--radius-l) 0;
+  }
+
+  .contact__mail-card,
+  .form {
+    background: var(--white);
+    border: 1px solid color-mix(in srgb, var(--ink) 8%, transparent);
+    border-radius: var(--radius-l);
+    padding: var(--space-l);
+    box-shadow: var(--shadow);
+  }
+
+  .contact__mail-card h2 {
+    font-size: var(--step-2);
+  }
+
+  .contact__mail-card p {
+    color: var(--ink-soft);
+    margin-bottom: var(--space-m);
+  }
+
+  .form {
+    display: grid;
+    gap: var(--space-m);
+  }
+
+  .form__row {
+    display: grid;
+    gap: 0.4rem;
+  }
+
+  .form label {
+    font-weight: 500;
+    font-size: var(--step--1);
+  }
+
+  .form input,
+  .form textarea {
+    font: inherit;
+    padding: 0.75em 0.9em;
+    border: 1px solid color-mix(in srgb, var(--ink) 20%, transparent);
+    border-radius: var(--radius);
+    background: var(--paper);
+    color: var(--ink);
+    width: 100%;
+  }
+
+  .form input:focus,
+  .form textarea:focus {
+    outline: 2px solid var(--teal);
+    outline-offset: 1px;
+    border-color: var(--teal);
+  }
+
+  .form button {
+    justify-self: start;
+  }
+
+  .form__success {
+    margin: 0;
+    padding: var(--space-s) var(--space-m);
+    background: var(--teal-tint);
+    color: var(--teal-deep);
+    border-radius: var(--radius);
+  }
+</style>
+
+<script>
+  // Formular ohne Seitenwechsel absenden (falls ein Endpoint konfiguriert ist)
+  const form = document.querySelector<HTMLFormElement>("form[data-form]");
+  form?.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    const button = form.querySelector<HTMLButtonElement>("button[type=submit]");
+    const success = form.querySelector<HTMLElement>("[data-success]");
+    if (button) button.disabled = true;
+    try {
+      const res = await fetch(form.action, {
+        method: "POST",
+        body: new FormData(form),
+        headers: { Accept: "application/json" },
+      });
+      if (!res.ok) throw new Error(String(res.status));
+      form.reset();
+      if (success) success.hidden = false;
+    } catch {
+      // Fallback: klassisches Absenden, der Dienst zeigt seine eigene Bestätigung
+      form.submit();
+    } finally {
+      if (button) button.disabled = false;
+    }
+  });
+</script>

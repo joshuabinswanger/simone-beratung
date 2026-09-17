@@ -1,0 +1,387 @@
+/* ==========================================================================
+   Gestaltungssystem – Simone Binswanger
+   Farben, Typografie, Abstände als Custom Properties. Alles weitere baut
+   auf diesen Tokens auf.
+   ========================================================================== */
+
+@import "@fontsource-variable/fraunces/index.css";
+@import "@fontsource-variable/inter/index.css";
+
+:root {
+  /* Farben */
+  --paper: #f6f3ec;
+  --paper-deep: #efeae0;
+  --mist: #e4e0d6;
+  --ink: #1b2430;
+  --ink-soft: #46505c;
+  --ink-muted: #6b7480;
+  --teal: #2f5d5a;
+  --teal-deep: #234745;
+  --teal-tint: #dfe8e5;
+  --gold: #c9a46a;
+  --gold-soft: #e8d9bd;
+  --white: #fffdf8;
+
+  /* Typografie */
+  --font-serif: "Fraunces Variable", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+  --font-sans: "Inter Variable", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+
+  --step--1: clamp(0.85rem, 0.82rem + 0.15vw, 0.94rem);
+  --step-0: clamp(1rem, 0.96rem + 0.22vw, 1.125rem);
+  --step-1: clamp(1.2rem, 1.12rem + 0.4vw, 1.4rem);
+  --step-2: clamp(1.45rem, 1.3rem + 0.75vw, 1.85rem);
+  --step-3: clamp(1.85rem, 1.55rem + 1.5vw, 2.6rem);
+  --step-4: clamp(2.4rem, 1.8rem + 3vw, 4rem);
+  --step-5: clamp(2.9rem, 2rem + 4.5vw, 5.4rem);
+
+  /* Abstände */
+  --space-xs: 0.5rem;
+  --space-s: 1rem;
+  --space-m: 1.5rem;
+  --space-l: 2.5rem;
+  --space-xl: 4rem;
+  --space-2xl: clamp(4rem, 3rem + 5vw, 7.5rem);
+
+  --measure: 62ch;
+  --content: 72rem;
+  --gutter: clamp(1.25rem, 4vw, 3rem);
+  --radius: 4px;
+  --radius-l: 10px;
+  --shadow: 0 1px 2px rgb(27 36 48 / 0.06), 0 12px 32px -12px rgb(27 36 48 / 0.18);
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Reset */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  color-scheme: light;
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: var(--step-0);
+  line-height: 1.6;
+  font-feature-settings: "kern", "liga", "calt";
+  -webkit-font-smoothing: antialiased;
+}
+
+img,
+svg,
+picture {
+  display: block;
+  max-width: 100%;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  line-height: 1.12;
+  letter-spacing: -0.01em;
+  margin: 0 0 var(--space-s);
+  text-wrap: balance;
+  font-variation-settings:
+    "opsz" 144,
+    "SOFT" 30,
+    "WONK" 0;
+}
+
+h1 {
+  font-size: var(--step-4);
+}
+h2 {
+  font-size: var(--step-3);
+}
+h3 {
+  font-size: var(--step-1);
+  line-height: 1.3;
+}
+
+p,
+ul,
+ol {
+  margin: 0 0 var(--space-s);
+}
+
+p,
+li {
+  max-width: var(--measure);
+  text-wrap: pretty;
+}
+
+a {
+  color: var(--teal);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+  text-decoration-color: color-mix(in srgb, var(--teal) 45%, transparent);
+  transition:
+    color 0.2s var(--ease),
+    text-decoration-color 0.2s var(--ease);
+}
+
+a:hover {
+  color: var(--teal-deep);
+  text-decoration-color: currentColor;
+}
+
+:focus-visible {
+  outline: 2px solid var(--teal);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+::selection {
+  background: var(--gold-soft);
+  color: var(--ink);
+}
+
+/* Layout-Helfer */
+.wrap {
+  width: min(100% - 2 * var(--gutter), var(--content));
+  margin-inline: auto;
+}
+
+.section {
+  padding-block: var(--space-2xl);
+}
+
+.section--tight {
+  padding-block: var(--space-xl);
+}
+
+.section--paper-deep {
+  background: var(--paper-deep);
+}
+
+.section--ink {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.section--ink a {
+  color: var(--gold);
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
+  font-size: var(--step--1);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--teal);
+  margin-bottom: var(--space-s);
+}
+
+.eyebrow::before {
+  content: "";
+  width: 1.6em;
+  height: 1px;
+  background: var(--gold);
+}
+
+.section--ink .eyebrow {
+  color: var(--gold);
+}
+
+.lead {
+  font-size: var(--step-1);
+  line-height: 1.5;
+  color: var(--ink-soft);
+  max-width: 48ch;
+}
+
+.section--ink .lead {
+  color: color-mix(in srgb, var(--paper) 80%, transparent);
+}
+
+.prose {
+  max-width: var(--measure);
+}
+
+.prose h2 {
+  font-size: var(--step-2);
+  margin-top: var(--space-l);
+}
+
+.prose h3 {
+  margin-top: var(--space-m);
+}
+
+.prose p + p {
+  margin-top: 0;
+}
+
+.prose ul {
+  padding-left: 1.2em;
+}
+
+.prose li + li {
+  margin-top: 0.35em;
+}
+
+.prose li::marker {
+  color: var(--gold);
+}
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
+  padding: 0.85em 1.5em;
+  border-radius: 999px;
+  font-family: var(--font-sans);
+  font-weight: 500;
+  font-size: var(--step-0);
+  line-height: 1;
+  text-decoration: none;
+  border: 1px solid transparent;
+  transition:
+    background 0.25s var(--ease),
+    color 0.25s var(--ease),
+    border-color 0.25s var(--ease),
+    transform 0.25s var(--ease);
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+}
+
+.btn--primary {
+  background: var(--teal);
+  color: var(--white);
+}
+
+.btn--primary:hover {
+  background: var(--teal-deep);
+  color: var(--white);
+}
+
+.btn--ghost {
+  background: transparent;
+  color: var(--ink);
+  border-color: color-mix(in srgb, var(--ink) 25%, transparent);
+}
+
+.btn--ghost:hover {
+  border-color: var(--ink);
+  color: var(--ink);
+}
+
+.section--ink .btn--ghost {
+  color: var(--paper);
+  border-color: color-mix(in srgb, var(--paper) 40%, transparent);
+}
+
+.section--ink .btn--ghost:hover {
+  border-color: var(--paper);
+  color: var(--paper);
+}
+
+.btn svg {
+  width: 1em;
+  height: 1em;
+  transition: transform 0.25s var(--ease);
+}
+
+.btn:hover svg {
+  transform: translateX(3px);
+}
+
+/* Karten-Raster */
+.grid {
+  display: grid;
+  gap: var(--space-m);
+}
+
+.grid--3 {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
+}
+
+.grid--2 {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+}
+
+.card {
+  background: var(--white);
+  border: 1px solid color-mix(in srgb, var(--ink) 8%, transparent);
+  border-radius: var(--radius-l);
+  padding: var(--space-m) var(--space-m) var(--space-l);
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.card h3 {
+  margin-bottom: 0.25rem;
+}
+
+.card p {
+  color: var(--ink-soft);
+  margin: 0;
+}
+
+.card__num {
+  font-family: var(--font-serif);
+  font-size: var(--step-2);
+  color: var(--gold);
+  line-height: 1;
+  font-variation-settings:
+    "opsz" 144,
+    "SOFT" 100;
+}
+
+/* Sichtbar nur für Screenreader */
+.visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* Einblend-Animation beim Scrollen (JS setzt .is-visible) */
+.reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity 0.7s var(--ease),
+    transform 0.7s var(--ease);
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}

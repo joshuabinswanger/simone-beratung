@@ -1,0 +1,263 @@
+---
+import { getCollection, render } from "astro:content";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PageIntro from "../components/PageIntro.astro";
+import ContactCta from "../components/ContactCta.astro";
+import { site } from "../lib/site";
+
+const { angebot } = site;
+const angebote = (await getCollection("angebote")).sort((a, b) => a.data.order - b.data.order);
+const rendered = await Promise.all(
+  angebote.map(async (entry) => ({ entry, Content: (await render(entry)).Content })),
+);
+---
+
+<BaseLayout title={angebot.title} description={angebot.intro}>
+  <PageIntro eyebrow="Angebot" title={angebot.title} lead={angebot.intro} />
+
+  <!-- Die einzelnen Angebote -->
+  <section class="section section--tight offers" aria-label="Angebote im Detail">
+    <div class="wrap">
+      {rendered.map(({ entry, Content }, i) => (
+        <article class="offer reveal" id={entry.id}>
+          <div class="offer__head">
+            <span class="card__num">0{i + 1}</span>
+            <h2>{entry.data.title}</h2>
+            <p class="lead">{entry.data.summary}</p>
+          </div>
+          <div class="offer__body">
+            <div class="prose">
+              <Content />
+            </div>
+            {entry.data.highlights.length > 0 && (
+              <ul class="offer__highlights">
+                {entry.data.highlights.map((h) => (
+                  <li>{h}</li>
+                ))}
+              </ul>
+            )}
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <!-- Formate & Zielgruppen -->
+  <section class="section section--paper-deep" aria-labelledby="formats-title">
+    <div class="wrap formats">
+      <div class="reveal">
+        <p class="eyebrow">Formate</p>
+        <h2 id="formats-title">{angebot.formatsTitle}</h2>
+        <div class="grid grid--2">
+          {angebot.formats.map((f) => (
+            <div class="card">
+              <h3>{f.title}</h3>
+              <p>{f.text}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+      <div class="reveal">
+        <p class="eyebrow">Für wen</p>
+        <h2>{angebot.audiencesTitle}</h2>
+        <ul class="audiences">
+          {angebot.audiences.map((a) => (
+            <li>
+              <h3>{a.title}</h3>
+              <p>{a.text}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Themen -->
+  <section class="section" aria-labelledby="topics-title">
+    <div class="wrap topics">
+      <div class="reveal">
+        <p class="eyebrow">Themen</p>
+        <h2 id="topics-title">{angebot.topicsTitle}</h2>
+      </div>
+      <ul class="topics__list reveal">
+        {angebot.topics.map((t) => (
+          <li>{t}</li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- Ablauf -->
+  <section class="section section--paper-deep" aria-labelledby="process-title">
+    <div class="wrap">
+      <p class="eyebrow reveal">Ablauf</p>
+      <h2 id="process-title" class="reveal">
+        {angebot.processTitle}
+      </h2>
+      <ol class="process">
+        {angebot.process.map((step, i) => (
+          <li class="process__step reveal">
+            <span class="process__num">{String(i + 1).padStart(2, "0")}</span>
+            <h3>{step.title}</h3>
+            <p>{step.text}</p>
+          </li>
+        ))}
+      </ol>
+      <div class="costs reveal">
+        <h3>{angebot.costs.title}</h3>
+        <p>{angebot.costs.text}</p>
+      </div>
+    </div>
+  </section>
+
+  <ContactCta />
+</BaseLayout>
+
+<style>
+  .offer {
+    display: grid;
+    gap: var(--space-l);
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+    padding-block: var(--space-xl);
+    border-top: 1px solid color-mix(in srgb, var(--ink) 10%, transparent);
+    scroll-margin-top: 6rem;
+  }
+
+  .offer:first-of-type {
+    border-top: 0;
+    padding-top: var(--space-m);
+  }
+
+  .offer__head h2 {
+    margin-top: var(--space-xs);
+    max-width: 16ch;
+  }
+
+  .offer__head {
+    position: sticky;
+    top: 6rem;
+    align-self: start;
+  }
+
+  .offer__highlights {
+    list-style: none;
+    margin: var(--space-m) 0 0;
+    padding: var(--space-m);
+    background: var(--white);
+    border: 1px solid color-mix(in srgb, var(--ink) 8%, transparent);
+    border-radius: var(--radius-l);
+    display: grid;
+    gap: 0.5rem;
+  }
+
+  .offer__highlights li {
+    padding-left: 1.4em;
+    position: relative;
+    color: var(--ink-soft);
+  }
+
+  .offer__highlights li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.75em;
+    width: 0.8em;
+    height: 1px;
+    background: var(--gold);
+  }
+
+  .formats {
+    display: grid;
+    gap: var(--space-xl);
+  }
+
+  .audiences {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-m);
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+  }
+
+  .audiences li {
+    border-top: 1px solid var(--gold);
+    padding-top: var(--space-s);
+  }
+
+  .audiences h3 {
+    margin-bottom: 0.3rem;
+  }
+
+  .audiences p {
+    color: var(--ink-soft);
+    margin: 0;
+  }
+
+  .topics {
+    display: grid;
+    gap: var(--space-l);
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+    align-items: start;
+  }
+
+  .topics__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+  }
+
+  .topics__list li {
+    padding: 0.55em 1em;
+    border: 1px solid color-mix(in srgb, var(--teal) 35%, transparent);
+    border-radius: 999px;
+    color: var(--teal-deep);
+    background: var(--white);
+    font-size: var(--step--1);
+  }
+
+  .process {
+    list-style: none;
+    margin: var(--space-l) 0 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-m);
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+    counter-reset: step;
+  }
+
+  .process__step {
+    padding-top: var(--space-s);
+    border-top: 1px solid color-mix(in srgb, var(--ink) 15%, transparent);
+  }
+
+  .process__num {
+    display: block;
+    font-family: var(--font-serif);
+    font-size: var(--step-2);
+    color: var(--gold);
+    margin-bottom: 0.4rem;
+  }
+
+  .process__step p {
+    color: var(--ink-soft);
+    margin: 0;
+  }
+
+  .costs {
+    margin-top: var(--space-xl);
+    padding: var(--space-m) var(--space-l);
+    border-left: 2px solid var(--gold);
+    background: var(--white);
+    border-radius: 0 var(--radius-l) var(--radius-l) 0;
+    max-width: 48rem;
+  }
+
+  .costs p {
+    margin: 0;
+    color: var(--ink-soft);
+  }
+</style>

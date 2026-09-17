@@ -1,0 +1,33 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Icon from "../components/Icon.astro";
+import { url } from "../lib/url";
+---
+
+<BaseLayout title="Seite nicht gefunden" description="Diese Seite existiert nicht.">
+  <section class="section notfound">
+    <div class="wrap">
+      <p class="eyebrow">404</p>
+      <h1>Diese Seite gibt es nicht.</h1>
+      <p class="lead">
+        Vielleicht hat sich die Adresse geändert. Auf der Startseite finden Sie alle Inhalte.
+      </p>
+      <a class="btn btn--primary" href={url("/")}>
+        Zur Startseite
+        <Icon name="arrow" />
+      </a>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .notfound {
+    min-height: 60vh;
+    display: flex;
+    align-items: center;
+  }
+
+  .notfound .lead {
+    margin-bottom: var(--space-l);
+  }
+</style>

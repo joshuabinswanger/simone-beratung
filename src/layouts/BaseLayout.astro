@@ -1,0 +1,119 @@
+---
+import "../styles/global.css";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import { site } from "../lib/site";
+import { url } from "../lib/url";
+
+interface Props {
+  title?: string;
+  description?: string;
+  /** Bild für Social-Media-Vorschau, relativ zu /public */
+  ogImage?: string;
+}
+
+const { title, description = site.description, ogImage = "og-image.jpg" } = Astro.props;
+const fullTitle = title
+  ? `${title} – ${site.name}`
+  : `${site.name} – ${site.tagline}, ${site.location}`;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const ogUrl = new URL(url(`/${ogImage}`), Astro.site);
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  name: `${site.name} – ${site.tagline}`,
+  description: site.description,
+  url: Astro.site?.toString(),
+  email: site.contact.email,
+  telephone: site.contact.phone,
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: site.location,
+    addressCountry: "CH",
+  },
+  founder: { "@type": "Person", name: site.name },
+  areaServed: "CH",
+  availableLanguage: ["de", "fr", "en", "it"],
+};
+---
+
+<!doctype html>
+<html lang="de-CH">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/svg+xml" href={url("/favicon.svg")} />
+    <link rel="apple-touch-icon" href={url("/apple-touch-icon.png")} />
+    <meta name="theme-color" content="#f6f3ec" />
+    <meta name="generator" content={Astro.generator} />
+    <link rel="sitemap" href={url("/sitemap-index.xml")} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogUrl} />
+    <meta property="og:locale" content="de_CH" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)}></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">
+      Zum Inhalt springen
+    </a>
+    <Header />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer />
+
+    <script>
+      // Sanftes Einblenden von .reveal-Elementen beim Scrollen
+      const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const items = document.querySelectorAll<HTMLElement>(".reveal");
+      if (reduce || !("IntersectionObserver" in window)) {
+        items.forEach((el) => el.classList.add("is-visible"));
+      } else {
+        const io = new IntersectionObserver(
+          (entries) => {
+            for (const e of entries) {
+              if (e.isIntersecting) {
+                (e.target as HTMLElement).classList.add("is-visible");
+                io.unobserve(e.target);
+              }
+            }
+          },
+          { rootMargin: "0px 0px -8% 0px", threshold: 0.1 },
+        );
+        items.forEach((el, i) => {
+          el.style.transitionDelay = `${Math.min(i % 4, 3) * 70}ms`;
+          io.observe(el);
+        });
+      }
+    </script>
+  </body>
+</html>
+
+<style>
+  .skip-link {
+    position: absolute;
+    left: var(--space-s);
+    top: -100%;
+    z-index: 100;
+    padding: 0.6rem 1rem;
+    background: var(--ink);
+    color: var(--paper);
+    border-radius: var(--radius);
+    text-decoration: none;
+  }
+
+  .skip-link:focus {
+    top: var(--space-s);
+  }
+</style>

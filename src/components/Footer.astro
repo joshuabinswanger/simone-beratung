@@ -1,0 +1,125 @@
+---
+import { site } from "../lib/site";
+import { url } from "../lib/url";
+const year = new Date().getFullYear();
+const tel = site.contact.phone.replace(/\s+/g, "");
+---
+
+<footer class="footer">
+  <div class="wrap footer__inner">
+    <div class="footer__brand">
+      <p class="footer__name">{site.name}</p>
+      <p class="footer__credentials">{site.credentials}</p>
+      <p class="footer__note">{site.footer.note}</p>
+    </div>
+
+    <div class="footer__contact">
+      <p class="footer__label">Kontakt</p>
+      <p>
+        {site.contact.address.map((line) => (
+          <span class="footer__line">{line}</span>
+        ))}
+      </p>
+      <p>
+        <a href={`mailto:${site.contact.email}`}>{site.contact.email}</a>
+        <br />
+        <a href={`tel:${tel}`}>{site.contact.phone}</a>
+      </p>
+    </div>
+
+    <div class="footer__links">
+      <p class="footer__label">Navigation</p>
+      <ul>
+        {site.nav.map((item) => (
+          <li>
+            <a href={url(item.href)}>{item.label}</a>
+          </li>
+        ))}
+        <li>
+          <a href={url("/impressum/")}>Impressum</a>
+        </li>
+        <li>
+          <a href={url("/datenschutz/")}>Datenschutz</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="wrap footer__bottom">
+    <span>
+      © {year} {site.name}, {site.location}
+    </span>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    background: var(--ink);
+    color: color-mix(in srgb, var(--paper) 78%, transparent);
+    padding-block: var(--space-xl) var(--space-m);
+    font-size: var(--step--1);
+  }
+
+  .footer a {
+    color: var(--paper);
+    text-decoration-color: color-mix(in srgb, var(--gold) 50%, transparent);
+  }
+
+  .footer a:hover {
+    color: var(--gold);
+  }
+
+  .footer__inner {
+    display: grid;
+    gap: var(--space-l);
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+    padding-bottom: var(--space-l);
+    border-bottom: 1px solid color-mix(in srgb, var(--paper) 14%, transparent);
+  }
+
+  .footer p {
+    margin: 0 0 0.5rem;
+  }
+
+  .footer__name {
+    font-family: var(--font-serif);
+    font-size: var(--step-1);
+    color: var(--paper);
+    font-variation-settings:
+      "opsz" 48,
+      "SOFT" 40;
+  }
+
+  .footer__credentials {
+    color: var(--gold);
+  }
+
+  .footer__note {
+    margin-top: var(--space-s);
+    max-width: 34ch;
+  }
+
+  .footer__label {
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 0.75rem;
+    color: var(--gold);
+    margin-bottom: 0.75rem;
+  }
+
+  .footer__line {
+    display: block;
+  }
+
+  .footer ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.35rem;
+  }
+
+  .footer__bottom {
+    padding-top: var(--space-m);
+    color: color-mix(in srgb, var(--paper) 55%, transparent);
+  }
+</style>

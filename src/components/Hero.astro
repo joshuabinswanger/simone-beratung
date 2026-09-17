@@ -1,0 +1,252 @@
+---
+/**
+ * Startseiten-Hero: geschwungene Linie (aus der Skizze) mit wechselnden
+ * Begriffen. Animation via GSAP; bei `prefers-reduced-motion` statisch.
+ */
+import { site } from "../lib/site";
+import { url } from "../lib/url";
+import Icon from "./Icon.astro";
+
+const { hero } = site;
+const words = hero.words;
+---
+
+<section class="hero" aria-labelledby="hero-title">
+  <svg
+    class="hero__line"
+    viewBox="0 0 1440 820"
+    preserveAspectRatio="none"
+    aria-hidden="true"
+    focusable="false"
+  >
+    <path
+      class="hero__path hero__path--back"
+      d="M-60 560 C 180 420, 330 740, 560 560 S 850 300, 1060 450 S 1330 650, 1520 420"
+      pathLength="1"
+    ></path>
+    <path
+      class="hero__path hero__path--front"
+      d="M-60 520 C 200 380, 340 700, 560 520 S 860 260, 1060 420 S 1360 640, 1500 380"
+      pathLength="1"
+    ></path>
+  </svg>
+
+  <div class="wrap hero__inner">
+    <div class="hero__text">
+      <p class="eyebrow">{site.tagline}</p>
+      <h1 id="hero-title" class="hero__title">
+        <span class="hero__prefix">{hero.prefix}</span>
+        <span class="hero__word-wrap">
+          <span class="hero__word" data-words={JSON.stringify(words)} aria-hidden="true">
+            {words[0]}
+          </span>
+          <span class="visually-hidden">{words.join(", ")}</span>
+        </span>
+      </h1>
+      <p class="hero__lead">{hero.lead}</p>
+      <div class="hero__actions">
+        <a class="btn btn--primary" href={url(hero.primaryCta.href)}>
+          {hero.primaryCta.label}
+          <Icon name="arrow" />
+        </a>
+        <a class="btn btn--ghost" href={url(hero.secondaryCta.href)}>
+          {hero.secondaryCta.label}
+        </a>
+      </div>
+    </div>
+    <p class="hero__credentials">
+      {site.name} · {site.credentials}
+    </p>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    overflow: hidden;
+    min-height: min(88svh, 56rem);
+    display: flex;
+    align-items: center;
+    background:
+      radial-gradient(
+        60% 50% at 80% 20%,
+        color-mix(in srgb, var(--gold-soft) 55%, transparent),
+        transparent 70%
+      ),
+      radial-gradient(
+        50% 45% at 10% 90%,
+        color-mix(in srgb, var(--teal-tint) 70%, transparent),
+        transparent 70%
+      ),
+      var(--paper);
+    isolation: isolate;
+  }
+
+  .hero__line {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  .hero__path {
+    fill: none;
+    stroke-linecap: round;
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    vector-effect: non-scaling-stroke;
+  }
+
+  .hero__path--front {
+    stroke: var(--teal);
+    stroke-width: 1.6;
+    opacity: 0.8;
+  }
+
+  .hero__path--back {
+    stroke: var(--gold);
+    stroke-width: 1.2;
+    opacity: 0.6;
+  }
+
+  .hero__inner {
+    position: relative;
+    z-index: 1;
+    padding-block: var(--space-2xl);
+    display: grid;
+    gap: var(--space-l);
+  }
+
+  .hero__text {
+    max-width: 44rem;
+  }
+
+  .hero__title {
+    font-size: var(--step-5);
+    line-height: 1.02;
+    margin-bottom: var(--space-m);
+    display: grid;
+  }
+
+  .hero__prefix {
+    color: var(--ink-soft);
+    font-variation-settings:
+      "opsz" 144,
+      "SOFT" 30;
+  }
+
+  .hero__word-wrap {
+    display: block;
+    min-height: 1.05em;
+    overflow: hidden;
+  }
+
+  .hero__word {
+    display: inline-block;
+    color: var(--teal);
+    font-style: italic;
+    font-variation-settings:
+      "opsz" 144,
+      "SOFT" 60,
+      "WONK" 1;
+    will-change: transform, opacity;
+  }
+
+  .hero__lead {
+    font-size: var(--step-1);
+    line-height: 1.5;
+    color: var(--ink-soft);
+    max-width: 40ch;
+    margin-bottom: var(--space-l);
+  }
+
+  .hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-s);
+  }
+
+  .hero__credentials {
+    font-size: var(--step--1);
+    color: var(--ink-muted);
+    letter-spacing: 0.02em;
+    margin: 0;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero__path {
+      stroke-dashoffset: 0;
+    }
+  }
+</style>
+
+<script>
+  import { gsap } from "gsap";
+
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const hero = document.querySelector<HTMLElement>(".hero");
+  const wordEl = hero?.querySelector<HTMLElement>(".hero__word");
+  const paths = hero ? Array.from(hero.querySelectorAll<SVGPathElement>(".hero__path")) : [];
+
+  if (hero && wordEl && !reduce) {
+    const words: string[] = JSON.parse(wordEl.dataset.words ?? "[]");
+
+    // 1. Linie zeichnen, danach sanft «atmen»
+    const draw = gsap.timeline({ defaults: { ease: "power2.inOut" } });
+    draw.to(paths, { strokeDashoffset: 0, duration: 2.6, stagger: 0.25 });
+    draw.to(
+      paths,
+      {
+        y: (i) => (i === 0 ? 14 : -10),
+        duration: 6,
+        ease: "sine.inOut",
+        repeat: -1,
+        yoyo: true,
+      },
+      "-=0.6",
+    );
+
+    // 2. Begriffe wechseln
+    if (words.length > 1) {
+      let i = 0;
+      const swap = () => {
+        i = (i + 1) % words.length;
+        gsap
+          .timeline()
+          .to(wordEl, { yPercent: -60, opacity: 0, duration: 0.45, ease: "power2.in" })
+          .add(() => {
+            wordEl.textContent = words[i];
+          })
+          .fromTo(
+            wordEl,
+            { yPercent: 60, opacity: 0 },
+            { yPercent: 0, opacity: 1, duration: 0.6, ease: "power3.out" },
+          );
+      };
+      gsap.delayedCall(2.4, function tick() {
+        swap();
+        gsap.delayedCall(2.8, tick);
+      });
+    }
+
+    // 3. Eingangsanimation Text
+    gsap.from(
+      hero.querySelectorAll(
+        ".eyebrow, .hero__title, .hero__lead, .hero__actions, .hero__credentials",
+      ),
+      {
+        y: 24,
+        opacity: 0,
+        duration: 0.9,
+        stagger: 0.12,
+        ease: "power3.out",
+        delay: 0.15,
+        clearProps: "all",
+      },
+    );
+  } else {
+    paths.forEach((p) => p.style.setProperty("stroke-dashoffset", "0"));
+  }
+</script>

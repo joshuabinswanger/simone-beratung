@@ -1,0 +1,246 @@
+---
+import { Image } from "astro:assets";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PageIntro from "../components/PageIntro.astro";
+import ContactCta from "../components/ContactCta.astro";
+import { site, werdegang } from "../lib/site";
+import portrait from "../assets/simone-portrait.jpg";
+
+const { ueberMich } = site;
+---
+
+<BaseLayout title={ueberMich.title} description={ueberMich.lead}>
+  <PageIntro eyebrow="Über mich" title={ueberMich.title} lead={ueberMich.lead} />
+
+  <section class="section section--tight bio">
+    <div class="wrap bio__inner">
+      <figure class="bio__figure reveal">
+        <Image
+          src={portrait}
+          alt={`Porträt von ${site.name}`}
+          widths={[420, 640, 900]}
+          sizes="(min-width: 60rem) 24rem, (min-width: 40rem) 45vw, 90vw"
+          loading="eager"
+          class="bio__img"
+        />
+        <figcaption>
+          <strong>{site.name}</strong>
+          <br />
+          {site.credentials}
+        </figcaption>
+      </figure>
+      <div class="bio__text prose reveal">
+        {ueberMich.paragraphs.map((p) => (
+          <p>{p}</p>
+        ))}
+        <p class="bio__languages">
+          <span class="bio__label">Sprachen</span>
+          {ueberMich.languages.join(" · ")}
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Haltung -->
+  <section class="section section--paper-deep" aria-labelledby="haltung-title">
+    <div class="wrap">
+      <p class="eyebrow reveal">Haltung</p>
+      <h2 id="haltung-title" class="reveal">
+        {ueberMich.haltung.title}
+      </h2>
+      <div class="grid grid--3 haltung">
+        {ueberMich.haltung.points.map((pt) => (
+          <div class="card reveal">
+            <h3>{pt.title}</h3>
+            <p>{pt.text}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Werdegang -->
+  <section class="section" aria-labelledby="stations-title">
+    <div class="wrap timeline__wrap">
+      <div class="reveal">
+        <p class="eyebrow">Werdegang</p>
+        <h2 id="stations-title">{werdegang.stationsTitle}</h2>
+        <ol class="timeline">
+          {werdegang.stations.map((s) => (
+            <li class="timeline__item reveal">
+              <span class="timeline__years">{s.from === s.to ? s.from : `${s.from}–${s.to}`}</span>
+              <div>
+                <h3>{s.role}</h3>
+                <p>
+                  {s.org}
+                  {s.place && <span class="timeline__place">, {s.place}</span>}
+                </p>
+                {s.note && <p class="timeline__note">{s.note}</p>}
+              </div>
+            </li>
+          ))}
+        </ol>
+      </div>
+      <div class="reveal">
+        <p class="eyebrow">Ausbildung</p>
+        <h2>{werdegang.educationTitle}</h2>
+        <ul class="education">
+          {werdegang.education.map((e) => (
+            <li>
+              <span class="education__year">{e.year}</span>
+              <div>
+                <strong>{e.title}</strong>
+                <span class="education__org">{e.org}</span>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <ContactCta />
+</BaseLayout>
+
+<style>
+  .bio__inner {
+    display: grid;
+    gap: var(--space-xl);
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+    align-items: start;
+  }
+
+  .bio__figure {
+    margin: 0;
+    max-width: 24rem;
+    position: sticky;
+    top: 6rem;
+  }
+
+  .bio__img {
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius-l);
+    box-shadow: var(--shadow);
+  }
+
+  .bio__figure figcaption {
+    margin-top: var(--space-s);
+    font-size: var(--step--1);
+    color: var(--ink-muted);
+    line-height: 1.5;
+  }
+
+  .bio__figure strong {
+    color: var(--ink);
+    font-family: var(--font-serif);
+    font-size: var(--step-0);
+    font-weight: 400;
+  }
+
+  .bio__text p:first-child {
+    font-size: var(--step-1);
+    line-height: 1.5;
+    color: var(--ink);
+  }
+
+  .bio__languages {
+    margin-top: var(--space-m);
+    padding-top: var(--space-s);
+    border-top: 1px solid var(--gold);
+    color: var(--ink-soft);
+  }
+
+  .bio__label {
+    display: block;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 0.75rem;
+    color: var(--teal);
+    margin-bottom: 0.25rem;
+  }
+
+  .haltung {
+    margin-top: var(--space-l);
+  }
+
+  .timeline__wrap {
+    display: grid;
+    gap: var(--space-xl);
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
+    align-items: start;
+  }
+
+  .timeline,
+  .education {
+    list-style: none;
+    margin: var(--space-m) 0 0;
+    padding: 0;
+  }
+
+  .timeline__item {
+    display: grid;
+    grid-template-columns: 7rem 1fr;
+    gap: var(--space-s);
+    padding-block: var(--space-s);
+    border-top: 1px solid color-mix(in srgb, var(--ink) 10%, transparent);
+  }
+
+  .timeline__years {
+    font-variant-numeric: tabular-nums;
+    color: var(--teal);
+    font-weight: 500;
+    font-size: var(--step--1);
+    padding-top: 0.25rem;
+  }
+
+  .timeline__item h3 {
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: var(--step-0);
+    margin-bottom: 0.15rem;
+  }
+
+  .timeline__item p {
+    margin: 0;
+    color: var(--ink-soft);
+    font-size: var(--step--1);
+  }
+
+  .timeline__note {
+    margin-top: 0.25rem !important;
+    color: var(--ink-muted) !important;
+  }
+
+  .education li {
+    display: grid;
+    grid-template-columns: 4rem 1fr;
+    gap: var(--space-s);
+    padding-block: var(--space-s);
+    border-top: 1px solid color-mix(in srgb, var(--ink) 10%, transparent);
+    font-size: var(--step--1);
+  }
+
+  .education__year {
+    color: var(--gold);
+    font-family: var(--font-serif);
+    font-size: var(--step-0);
+  }
+
+  .education strong {
+    display: block;
+    font-weight: 500;
+    color: var(--ink);
+  }
+
+  .education__org {
+    color: var(--ink-soft);
+  }
+
+  @media (max-width: 30rem) {
+    .timeline__item {
+      grid-template-columns: 1fr;
+      gap: 0.25rem;
+    }
+  }
+</style>

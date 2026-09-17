@@ -1,0 +1,197 @@
+---
+import { site } from "../lib/site";
+import { url, isActive } from "../lib/url";
+import Icon from "./Icon.astro";
+const current = Astro.url.pathname;
+---
+
+<header class="header">
+  <div class="wrap header__inner">
+    <a class="brand" href={url("/")} aria-label={`${site.name} – Startseite`}>
+      <span class="brand__name">{site.name}</span>
+      <span class="brand__tag">{site.tagline}</span>
+    </a>
+
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+      <Icon name="menu" class="nav-toggle__open" />
+      <Icon name="close" class="nav-toggle__close" />
+      <span class="visually-hidden">Menü</span>
+    </button>
+
+    <nav id="site-nav" class="nav" aria-label="Hauptnavigation">
+      <ul>
+        {site.nav.map((item) => (
+          <li>
+            <a
+              href={url(item.href)}
+              aria-current={isActive(current, item.href) ? "page" : undefined}
+            >
+              {item.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: color-mix(in srgb, var(--paper) 88%, transparent);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid color-mix(in srgb, var(--ink) 8%, transparent);
+  }
+
+  .header__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-m);
+    min-height: 4.5rem;
+  }
+
+  .brand {
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: var(--ink);
+    line-height: 1.15;
+  }
+
+  .brand__name {
+    font-family: var(--font-serif);
+    font-size: var(--step-1);
+    letter-spacing: -0.01em;
+    font-variation-settings:
+      "opsz" 48,
+      "SOFT" 40;
+  }
+
+  .brand__tag {
+    font-size: var(--step--1);
+    color: var(--ink-muted);
+    letter-spacing: 0.02em;
+  }
+
+  .nav ul {
+    display: flex;
+    gap: clamp(1rem, 2.5vw, 2.25rem);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .nav a {
+    position: relative;
+    display: inline-block;
+    padding: 0.4rem 0;
+    color: var(--ink-soft);
+    font-weight: 500;
+    font-size: var(--step--1);
+    letter-spacing: 0.01em;
+    text-decoration: none;
+  }
+
+  .nav a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 100%;
+    bottom: 0.1rem;
+    height: 1px;
+    background: var(--gold);
+    transition: right 0.3s var(--ease);
+  }
+
+  .nav a:hover,
+  .nav a[aria-current="page"] {
+    color: var(--ink);
+  }
+
+  .nav a:hover::after,
+  .nav a[aria-current="page"]::after {
+    right: 0;
+  }
+
+  .nav-toggle {
+    display: none;
+    width: 2.75rem;
+    height: 2.75rem;
+    border: 1px solid color-mix(in srgb, var(--ink) 15%, transparent);
+    border-radius: 999px;
+    background: transparent;
+    color: var(--ink);
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+
+  .nav-toggle :global(svg) {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+
+  .nav-toggle :global(.nav-toggle__close) {
+    display: none;
+  }
+
+  .nav-toggle[aria-expanded="true"] :global(.nav-toggle__open) {
+    display: none;
+  }
+
+  .nav-toggle[aria-expanded="true"] :global(.nav-toggle__close) {
+    display: block;
+  }
+
+  @media (max-width: 47.99rem) {
+    .header__inner {
+      flex-wrap: wrap;
+    }
+
+    .nav-toggle {
+      display: inline-flex;
+    }
+
+    .nav {
+      flex-basis: 100%;
+      display: none;
+      padding-block: var(--space-s) var(--space-m);
+      border-top: 1px solid color-mix(in srgb, var(--ink) 8%, transparent);
+    }
+
+    .nav.is-open {
+      display: block;
+    }
+
+    .nav ul {
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .nav a {
+      display: block;
+      font-size: var(--step-1);
+      font-family: var(--font-serif);
+      font-weight: 400;
+      padding: 0.5rem 0;
+    }
+
+    .nav a::after {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  const toggle = document.querySelector<HTMLButtonElement>(".nav-toggle");
+  const nav = document.getElementById("site-nav");
+  toggle?.addEventListener("click", () => {
+    const open = toggle.getAttribute("aria-expanded") === "true";
+    toggle.setAttribute("aria-expanded", String(!open));
+    nav?.classList.toggle("is-open", !open);
+  });
+</script>

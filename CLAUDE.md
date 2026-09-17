@@ -34,7 +34,7 @@ npx astro check    # Typprüfung
 ## Dokumentation
 
 - Design-Spezifikation: `docs/superpowers/specs/2026-09-17-simone-website-design.md`
-- Übergabe / Hosting: `Docs/HANDOVER.md`
-- Inhalte pflegen: `Docs/INHALTE-PFLEGEN.md`
-- Offene Punkte: `Docs/OFFENE-PUNKTE.md`
+- Übergabe / Hosting: `docs/HANDOVER.md`
+- Inhalte pflegen: `docs/INHALTE-PFLEGEN.md`
+- Offene Punkte: `docs/OFFENE-PUNKTE.md`
 - Astro-Hinweise des Starters: `AGENTS.md`

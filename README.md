@@ -7,9 +7,9 @@ Begleitung, psychosoziale Beratung, Entwicklung & Coaching) in Winterthur.
 
 ## Für wen ist welches Dokument?
 
-- **Texte ändern, ohne zu programmieren** → [Docs/INHALTE-PFLEGEN.md](Docs/INHALTE-PFLEGEN.md)
-- **Hosting, Domain, Übergabe an eine Agentur oder neue Besitzerin** → [Docs/HANDOVER.md](Docs/HANDOVER.md)
-- **Was Simone noch liefern/entscheiden muss, bevor die Seite live geht** → [Docs/OFFENE-PUNKTE.md](Docs/OFFENE-PUNKTE.md)
+- **Texte ändern, ohne zu programmieren** → [docs/INHALTE-PFLEGEN.md](docs/INHALTE-PFLEGEN.md)
+- **Hosting, Domain, Übergabe an eine Agentur oder neue Besitzerin** → [docs/HANDOVER.md](docs/HANDOVER.md)
+- **Was Simone noch liefern/entscheiden muss, bevor die Seite live geht** → [docs/OFFENE-PUNKTE.md](docs/OFFENE-PUNKTE.md)
 - **Warum die Seite so aufgebaut ist (Design-Entscheidungen)** → [docs/superpowers/specs/2026-09-17-simone-website-design.md](docs/superpowers/specs/2026-09-17-simone-website-design.md)
 
 ## Technik-Stack
@@ -33,14 +33,14 @@ npm run preview     # den Produktions-Build lokal testen
 Alle Texte liegen getrennt vom Code in [src/content/](src/content/) und lassen sich
 direkt auf GitHub bearbeiten – ohne Programmierkenntnisse. Details, inklusive einer
 Tabelle «welcher Text steht in welcher Datei», stehen in
-[Docs/INHALTE-PFLEGEN.md](Docs/INHALTE-PFLEGEN.md).
+[docs/INHALTE-PFLEGEN.md](docs/INHALTE-PFLEGEN.md).
 
 ## Wie das Deployment funktioniert
 
 Jeder Push auf den Branch `main` löst über GitHub Actions
 ([.github/workflows/deploy.yml](.github/workflows/deploy.yml)) automatisch einen
 Build und eine Veröffentlichung auf GitHub Pages aus (kostenlos, ca. 1–2 Minuten).
-Details, Domain-Wechsel und Übergabe: [Docs/HANDOVER.md](Docs/HANDOVER.md).
+Details, Domain-Wechsel und Übergabe: [docs/HANDOVER.md](docs/HANDOVER.md).
 
 ## Ordnerübersicht
 
@@ -54,4 +54,4 @@ Details, Domain-Wechsel und Übergabe: [Docs/HANDOVER.md](Docs/HANDOVER.md).
 | `src/assets/simone-portrait.jpg` | Porträtfoto |
 | `public/` | Favicon, Apple-Touch-Icon, Social-Preview-Bild (`og-image.jpg`) |
 | `docs/superpowers/specs/` | Design-Spezifikation der Website |
-| `Docs/` | Übergabe- und Pflege-Dokumentation (diese Dateien) |
+| `docs/` | Übergabe- und Pflege-Dokumentation (diese Dateien) |

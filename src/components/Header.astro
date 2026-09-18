@@ -8,8 +8,11 @@ const current = Astro.url.pathname;
 <header class="header">
   <div class="wrap header__inner">
     <a class="brand" href={url("/")} aria-label={`${site.name} – Startseite`}>
-      <span class="brand__name">{site.name}</span>
-      <span class="brand__tag">{site.tagline}</span>
+      <span class="brand__mark" aria-hidden="true"></span>
+      <span class="brand__text">
+        <span class="brand__name">{site.name}</span>
+        <span class="brand__tag">{site.tagline}</span>
+      </span>
     </a>
 
     <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
@@ -30,6 +33,9 @@ const current = Astro.url.pathname;
             </a>
           </li>
         ))}
+        <li class="nav__cta">
+          <a class="btn btn--primary" href={url("/kontakt/")}>Gespräch anfragen</a>
+        </li>
       </ul>
     </nav>
   </div>
@@ -40,10 +46,10 @@ const current = Astro.url.pathname;
     position: sticky;
     top: 0;
     z-index: 50;
-    background: color-mix(in srgb, var(--paper) 88%, transparent);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border-bottom: 1px solid color-mix(in srgb, var(--ink) 8%, transparent);
+    background: color-mix(in srgb, var(--white) 90%, transparent);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--line);
   }
 
   .header__inner {
@@ -51,79 +57,99 @@ const current = Astro.url.pathname;
     align-items: center;
     justify-content: space-between;
     gap: var(--space-m);
-    min-height: 4.5rem;
+    min-height: 4.25rem;
   }
 
   .brand {
     display: flex;
-    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
     text-decoration: none;
     color: var(--ink);
     line-height: 1.15;
   }
 
+  .brand__mark {
+    width: 0.75rem;
+    height: 0.75rem;
+    border-radius: 3px;
+    background: var(--blue);
+    box-shadow: 0.55rem 0.55rem 0 -0.15rem var(--warm);
+    flex: none;
+    margin-right: 0.35rem;
+  }
+
+  .brand__text {
+    display: flex;
+    flex-direction: column;
+  }
+
   .brand__name {
-    font-family: var(--font-serif);
-    font-size: var(--step-1);
-    letter-spacing: -0.01em;
-    font-variation-settings:
-      "opsz" 48,
-      "SOFT" 40;
+    font-family: var(--font-head);
+    font-weight: 700;
+    font-size: var(--step-0);
+    letter-spacing: -0.02em;
   }
 
   .brand__tag {
-    font-size: var(--step--1);
+    font-size: 0.78rem;
     color: var(--ink-muted);
-    letter-spacing: 0.02em;
   }
 
   .nav ul {
     display: flex;
-    gap: clamp(1rem, 2.5vw, 2.25rem);
+    align-items: center;
+    gap: clamp(1rem, 2.2vw, 2rem);
     list-style: none;
     margin: 0;
     padding: 0;
   }
 
-  .nav a {
+  .nav a:not(.btn) {
     position: relative;
     display: inline-block;
     padding: 0.4rem 0;
     color: var(--ink-soft);
     font-weight: 500;
     font-size: var(--step--1);
-    letter-spacing: 0.01em;
     text-decoration: none;
   }
 
-  .nav a::after {
+  .nav a:not(.btn)::after {
     content: "";
     position: absolute;
     left: 0;
-    right: 100%;
+    right: 0;
     bottom: 0.1rem;
-    height: 1px;
-    background: var(--gold);
-    transition: right 0.3s var(--ease);
+    height: 2px;
+    border-radius: 2px;
+    background: var(--warm);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.25s var(--ease);
   }
 
-  .nav a:hover,
+  .nav a:not(.btn):hover,
   .nav a[aria-current="page"] {
     color: var(--ink);
   }
 
-  .nav a:hover::after,
+  .nav a:not(.btn):hover::after,
   .nav a[aria-current="page"]::after {
-    right: 0;
+    transform: scaleX(1);
+  }
+
+  .nav__cta .btn {
+    padding: 0.7em 1.2em;
   }
 
   .nav-toggle {
     display: none;
     width: 2.75rem;
     height: 2.75rem;
-    border: 1px solid color-mix(in srgb, var(--ink) 15%, transparent);
-    border-radius: 999px;
-    background: transparent;
+    border: 1px solid var(--line-strong);
+    border-radius: 12px;
+    background: var(--white);
     color: var(--ink);
     align-items: center;
     justify-content: center;
@@ -152,6 +178,10 @@ const current = Astro.url.pathname;
       flex-wrap: wrap;
     }
 
+    .nav__cta {
+      display: none;
+    }
+
     .nav-toggle {
       display: inline-flex;
     }
@@ -159,8 +189,7 @@ const current = Astro.url.pathname;
     .nav {
       flex-basis: 100%;
       display: none;
-      padding-block: var(--space-s) var(--space-m);
-      border-top: 1px solid color-mix(in srgb, var(--ink) 8%, transparent);
+      padding-block: var(--space-xs) var(--space-m);
     }
 
     .nav.is-open {
@@ -169,19 +198,25 @@ const current = Astro.url.pathname;
 
     .nav ul {
       flex-direction: column;
-      gap: 0.25rem;
+      align-items: stretch;
+      gap: 0;
     }
 
-    .nav a {
+    .nav a:not(.btn) {
       display: block;
       font-size: var(--step-1);
-      font-family: var(--font-serif);
-      font-weight: 400;
-      padding: 0.5rem 0;
+      font-family: var(--font-head);
+      font-weight: 600;
+      padding: 0.7rem 0;
+      border-top: 1px solid var(--line);
     }
 
-    .nav a::after {
+    .nav a:not(.btn)::after {
       display: none;
+    }
+
+    .nav a[aria-current="page"] {
+      color: var(--blue);
     }
   }
 </style>

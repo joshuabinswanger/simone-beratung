@@ -15,6 +15,8 @@ Website for Simone Binswanger (Josh's relative; lic. iur., Sozialarbeiterin, CAS
 - **Content** lives in `src/content/` (site.yaml, werdegang.yaml, angebote/*.md, rechtliches/*.md); types in `src/lib/site.ts`.
 - **Placeholders Simone must fill:** e-mail, phone, practice address, Honorar text, Formspree endpoint (`contact.formEndpoint`), approval of photo/texts, education years (Nachdiplom FH 2004 vs CV 2000–2003). Tracked in `docs/OFFENE-PUNKTE.md`.
 - **Spec:** `docs/superpowers/specs/2026-09-17-simone-website-design.md`.
+- **Design (redesign 2026-09-18, on Josh's feedback):** white background, blue primary (`--blue #2A5BD7`), warm apricot accent (`--warm #E38B5A`), light soft-blue section tint; fonts Manrope (headings) + Inter (body), both self-hosted. No dark sections. Josh disliked the first cream/teal/gold serif look ("weird timing and layering, overlaps on mobile").
+- **Animation rules learned:** never gate content visibility on JS (hero entry is CSS keyframes; GSAP only rotates the hero word). Scroll `.reveal` only ≥48rem and without reduced-motion; on phones everything is visible immediately. `position: sticky` side columns only inside `@media (min-width: 48rem)` – sticky in a single-column mobile layout made headings overlap body text.
 
 **Why:** Josh wanted a shareable, free, handover-ready project; his stack is Astro (see [[user-web-stack]]).
 **How to apply:** Edit content in `src/content/`, not components. Keep Swiss German («ss», «…»). Run `npm run build` + `npx astro check` before pushing; a push to `main` deploys automatically.

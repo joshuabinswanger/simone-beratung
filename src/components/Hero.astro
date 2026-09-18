@@ -1,7 +1,9 @@
 ---
 /**
  * Startseiten-Hero: geschwungene Linie (aus der Skizze) mit wechselnden
- * Begriffen. Animation via GSAP; bei `prefers-reduced-motion` statisch.
+ * Begriffen. Linie und Einblenden laufen als CSS-Animation (Inhalt ist auch
+ * ohne JavaScript sofort sichtbar); nur der Wortwechsel nutzt GSAP.
+ * Bei `prefers-reduced-motion` ist alles statisch.
  */
 import { site } from "../lib/site";
 import { url } from "../lib/url";
@@ -12,29 +14,30 @@ const words = hero.words;
 ---
 
 <section class="hero" aria-labelledby="hero-title">
+  <div class="hero__glow" aria-hidden="true"></div>
   <svg
     class="hero__line"
-    viewBox="0 0 1440 820"
+    viewBox="0 0 1440 700"
     preserveAspectRatio="none"
     aria-hidden="true"
     focusable="false"
   >
     <path
-      class="hero__path hero__path--back"
-      d="M-60 560 C 180 420, 330 740, 560 560 S 850 300, 1060 450 S 1330 650, 1520 420"
+      class="hero__path hero__path--warm"
+      d="M-40 520 C 220 400, 380 640, 640 500 S 980 260, 1180 400 S 1380 560, 1500 380"
       pathLength="1"
     ></path>
     <path
-      class="hero__path hero__path--front"
-      d="M-60 520 C 200 380, 340 700, 560 520 S 860 260, 1060 420 S 1360 640, 1500 380"
+      class="hero__path hero__path--blue"
+      d="M-40 470 C 240 350, 380 600, 640 450 S 1000 210, 1180 360 S 1400 540, 1500 330"
       pathLength="1"
     ></path>
   </svg>
 
   <div class="wrap hero__inner">
     <div class="hero__text">
-      <p class="eyebrow">{site.tagline}</p>
-      <h1 id="hero-title" class="hero__title">
+      <p class="eyebrow hero__rise" style="--i: 0">{site.tagline}</p>
+      <h1 id="hero-title" class="hero__title hero__rise" style="--i: 1">
         <span class="hero__prefix">{hero.prefix}</span>
         <span class="hero__word-wrap">
           <span class="hero__word" data-words={JSON.stringify(words)} aria-hidden="true">
@@ -43,8 +46,8 @@ const words = hero.words;
           <span class="visually-hidden">{words.join(", ")}</span>
         </span>
       </h1>
-      <p class="hero__lead">{hero.lead}</p>
-      <div class="hero__actions">
+      <p class="hero__lead hero__rise" style="--i: 2">{hero.lead}</p>
+      <div class="hero__actions hero__rise" style="--i: 3">
         <a class="btn btn--primary" href={url(hero.primaryCta.href)}>
           {hero.primaryCta.label}
           <Icon name="arrow" />
@@ -54,7 +57,7 @@ const words = hero.words;
         </a>
       </div>
     </div>
-    <p class="hero__credentials">
+    <p class="hero__credentials hero__rise" style="--i: 4">
       {site.name} · {site.credentials}
     </p>
   </div>
@@ -64,22 +67,27 @@ const words = hero.words;
   .hero {
     position: relative;
     overflow: hidden;
-    min-height: min(88svh, 56rem);
+    min-height: min(82svh, 52rem);
     display: flex;
     align-items: center;
-    background:
-      radial-gradient(
-        60% 50% at 80% 20%,
-        color-mix(in srgb, var(--gold-soft) 55%, transparent),
-        transparent 70%
-      ),
-      radial-gradient(
-        50% 45% at 10% 90%,
-        color-mix(in srgb, var(--teal-tint) 70%, transparent),
-        transparent 70%
-      ),
-      var(--paper);
+    background: var(--bg);
     isolation: isolate;
+  }
+
+  .hero__glow {
+    position: absolute;
+    z-index: 0;
+    top: -20%;
+    right: -10%;
+    width: min(60vw, 40rem);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: radial-gradient(
+      closest-side,
+      color-mix(in srgb, var(--blue-tint) 90%, transparent),
+      transparent
+    );
+    pointer-events: none;
   }
 
   .hero__line {
@@ -91,24 +99,59 @@ const words = hero.words;
     pointer-events: none;
   }
 
+  /* Auf dem Handy läuft die Linie nur im unteren Drittel, damit sie den
+     Text nicht kreuzt */
+  @media (max-width: 47.99rem) {
+    .hero__line {
+      top: auto;
+      bottom: 0;
+      height: 7rem;
+      opacity: 0.8;
+    }
+
+    .hero__inner {
+      padding-bottom: calc(var(--space-xl) + 7rem);
+    }
+  }
+
+  /* Ab Tablet-Breite beginnt die Linie rechts neben dem Text und blendet
+     weich ein, damit sie den Lead-Text nicht kreuzt */
+  @media (min-width: 48rem) {
+    .hero__line {
+      left: 42%;
+      width: 58%;
+      -webkit-mask-image: linear-gradient(to right, transparent, #000 18%);
+      mask-image: linear-gradient(to right, transparent, #000 18%);
+    }
+  }
+
   .hero__path {
     fill: none;
     stroke-linecap: round;
     stroke-dasharray: 1;
     stroke-dashoffset: 1;
     vector-effect: non-scaling-stroke;
+    animation: hero-draw 2.4s var(--ease) forwards;
   }
 
-  .hero__path--front {
-    stroke: var(--teal);
-    stroke-width: 1.6;
-    opacity: 0.8;
+  .hero__path--blue {
+    stroke: var(--blue);
+    stroke-width: 1.5;
+    opacity: 0.55;
+    animation-delay: 0.2s;
   }
 
-  .hero__path--back {
-    stroke: var(--gold);
+  .hero__path--warm {
+    stroke: var(--warm);
     stroke-width: 1.2;
     opacity: 0.6;
+    animation-delay: 0.45s;
+  }
+
+  @keyframes hero-draw {
+    to {
+      stroke-dashoffset: 0;
+    }
   }
 
   .hero__inner {
@@ -124,41 +167,34 @@ const words = hero.words;
   }
 
   .hero__title {
-    font-size: var(--step-5);
-    line-height: 1.02;
+    font-size: clamp(2.25rem, 1.5rem + 3.8vw, 4.6rem);
+    line-height: 1.05;
     margin-bottom: var(--space-m);
     display: grid;
+    gap: 0.05em;
   }
 
   .hero__prefix {
-    color: var(--ink-soft);
-    font-variation-settings:
-      "opsz" 144,
-      "SOFT" 30;
+    color: var(--ink);
   }
 
   .hero__word-wrap {
     display: block;
-    min-height: 1.05em;
     overflow: hidden;
+    padding-bottom: 0.08em;
   }
 
   .hero__word {
     display: inline-block;
-    color: var(--teal);
-    font-style: italic;
-    font-variation-settings:
-      "opsz" 144,
-      "SOFT" 60,
-      "WONK" 1;
+    color: var(--blue);
     will-change: transform, opacity;
   }
 
   .hero__lead {
     font-size: var(--step-1);
-    line-height: 1.5;
+    line-height: 1.55;
     color: var(--ink-soft);
-    max-width: 40ch;
+    max-width: 38ch;
     margin-bottom: var(--space-l);
   }
 
@@ -171,11 +207,35 @@ const words = hero.words;
   .hero__credentials {
     font-size: var(--step--1);
     color: var(--ink-muted);
-    letter-spacing: 0.02em;
     margin: 0;
+    padding-top: var(--space-s);
+    border-top: 1px solid var(--line);
+    max-width: none;
+  }
+
+  /* Einblenden: reine CSS-Animation, gestaffelt über --i */
+  .hero__rise {
+    animation: hero-rise 0.7s var(--ease) both;
+    animation-delay: calc(0.1s + var(--i) * 0.09s);
+  }
+
+  @keyframes hero-rise {
+    from {
+      opacity: 0;
+      transform: translateY(14px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
   }
 
   @media (prefers-reduced-motion: reduce) {
+    .hero__path,
+    .hero__rise {
+      animation: none;
+    }
+
     .hero__path {
       stroke-dashoffset: 0;
     }
@@ -186,67 +246,31 @@ const words = hero.words;
   import { gsap } from "gsap";
 
   const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const hero = document.querySelector<HTMLElement>(".hero");
-  const wordEl = hero?.querySelector<HTMLElement>(".hero__word");
-  const paths = hero ? Array.from(hero.querySelectorAll<SVGPathElement>(".hero__path")) : [];
+  const wordEl = document.querySelector<HTMLElement>(".hero__word");
 
-  if (hero && wordEl && !reduce) {
+  if (wordEl && !reduce) {
     const words: string[] = JSON.parse(wordEl.dataset.words ?? "[]");
-
-    // 1. Linie zeichnen, danach sanft «atmen»
-    const draw = gsap.timeline({ defaults: { ease: "power2.inOut" } });
-    draw.to(paths, { strokeDashoffset: 0, duration: 2.6, stagger: 0.25 });
-    draw.to(
-      paths,
-      {
-        y: (i) => (i === 0 ? 14 : -10),
-        duration: 6,
-        ease: "sine.inOut",
-        repeat: -1,
-        yoyo: true,
-      },
-      "-=0.6",
-    );
-
-    // 2. Begriffe wechseln
     if (words.length > 1) {
       let i = 0;
       const swap = () => {
         i = (i + 1) % words.length;
         gsap
           .timeline()
-          .to(wordEl, { yPercent: -60, opacity: 0, duration: 0.45, ease: "power2.in" })
+          .to(wordEl, { yPercent: -50, opacity: 0, duration: 0.35, ease: "power2.in" })
           .add(() => {
             wordEl.textContent = words[i];
           })
           .fromTo(
             wordEl,
-            { yPercent: 60, opacity: 0 },
-            { yPercent: 0, opacity: 1, duration: 0.6, ease: "power3.out" },
+            { yPercent: 50, opacity: 0 },
+            { yPercent: 0, opacity: 1, duration: 0.5, ease: "power3.out" },
           );
       };
-      gsap.delayedCall(2.4, function tick() {
-        swap();
+      // Erst wechseln, wenn die Einblendung sicher abgeschlossen ist
+      gsap.delayedCall(2.6, function tick() {
+        if (!document.hidden) swap();
         gsap.delayedCall(2.8, tick);
       });
     }
-
-    // 3. Eingangsanimation Text
-    gsap.from(
-      hero.querySelectorAll(
-        ".eyebrow, .hero__title, .hero__lead, .hero__actions, .hero__credentials",
-      ),
-      {
-        y: 24,
-        opacity: 0,
-        duration: 0.9,
-        stagger: 0.12,
-        ease: "power3.out",
-        delay: 0.15,
-        clearProps: "all",
-      },
-    );
-  } else {
-    paths.forEach((p) => p.style.setProperty("stroke-dashoffset", "0"));
   }
 </script>

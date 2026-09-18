@@ -14,17 +14,29 @@ const { home, values } = site;
 <BaseLayout>
   <Hero />
 
+  <!-- Werte-Band -->
+  <section class="section--tight values" aria-label="Arbeitsweise">
+    <div class="wrap values__grid">
+      {values.map((v) => (
+        <div class="value reveal">
+          <h3 class="value__title">{v.title}</h3>
+          <p>{v.text}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
   <!-- Drei Säulen des Angebots -->
-  <section class="section pillars" aria-labelledby="pillars-title">
+  <section class="section section--soft pillars" aria-labelledby="pillars-title">
     <div class="wrap">
-      <p class="eyebrow reveal">Angebot</p>
-      <h2 id="pillars-title" class="reveal">
-        {home.pillarsTitle}
-      </h2>
+      <div class="section-head reveal">
+        <p class="eyebrow">Angebot</p>
+        <h2 id="pillars-title">{home.pillarsTitle}</h2>
+      </div>
       <div class="grid grid--3 pillars__grid">
         {home.pillars.map((p, i) => (
           <a class="card pillar reveal" href={url(p.href)}>
-            <span class="card__num">0{i + 1}</span>
+            <span class="num">0{i + 1}</span>
             <h3>{p.title}</h3>
             <p>{p.text}</p>
             <span class="pillar__more">
@@ -33,18 +45,6 @@ const { home, values } = site;
           </a>
         ))}
       </div>
-    </div>
-  </section>
-
-  <!-- Werte-Band -->
-  <section class="section section--tight section--paper-deep values" aria-label="Arbeitsweise">
-    <div class="wrap values__grid">
-      {values.map((v) => (
-        <div class="value reveal">
-          <h3 class="value__title">{v.title}</h3>
-          <p>{v.text}</p>
-        </div>
-      ))}
     </div>
   </section>
 
@@ -59,7 +59,7 @@ const { home, values } = site;
       <ol class="approach__list">
         {home.approach.points.map((pt, i) => (
           <li class="approach__item reveal">
-            <span class="approach__num">{String(i + 1).padStart(2, "0")}</span>
+            <span class="num num--warm">{String(i + 1).padStart(2, "0")}</span>
             <div>
               <h3>{pt.title}</h3>
               <p>{pt.text}</p>
@@ -71,7 +71,7 @@ const { home, values } = site;
   </section>
 
   <!-- Über mich Teaser -->
-  <section class="section section--paper-deep about" aria-labelledby="about-title">
+  <section class="section section--soft about" aria-labelledby="about-title">
     <div class="wrap about__inner">
       <figure class="about__figure reveal">
         <Image
@@ -100,44 +100,15 @@ const { home, values } = site;
 </BaseLayout>
 
 <style>
-  .pillars__grid {
-    margin-top: var(--space-l);
+  .section-head {
+    margin-bottom: var(--space-l);
   }
 
-  .pillar {
-    text-decoration: none;
-    color: inherit;
-    transition:
-      transform 0.3s var(--ease),
-      box-shadow 0.3s var(--ease),
-      border-color 0.3s var(--ease);
-  }
-
-  .pillar:hover {
-    transform: translateY(-4px);
-    border-color: color-mix(in srgb, var(--teal) 35%, transparent);
-    color: inherit;
-  }
-
-  .pillar__more {
-    margin-top: auto;
-    padding-top: var(--space-s);
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5em;
-    color: var(--teal);
-    font-weight: 500;
-    font-size: var(--step--1);
-  }
-
-  .pillar__more :global(svg) {
-    width: 1em;
-    height: 1em;
-    transition: transform 0.3s var(--ease);
-  }
-
-  .pillar:hover .pillar__more :global(svg) {
-    transform: translateX(4px);
+  /* Werte */
+  .values {
+    padding-block: var(--space-l);
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
   }
 
   .values__grid {
@@ -147,36 +118,67 @@ const { home, values } = site;
   }
 
   .value {
-    border-top: 1px solid var(--gold);
-    padding-top: var(--space-s);
+    padding-left: var(--space-s);
+    border-left: 2px solid var(--warm);
   }
 
   .value__title {
-    font-style: italic;
-    font-size: var(--step-2);
-    color: var(--teal);
-    margin-bottom: 0.4rem;
-    font-variation-settings:
-      "opsz" 144,
-      "SOFT" 60,
-      "WONK" 1;
+    font-size: var(--step-1);
+    color: var(--blue);
+    margin-bottom: 0.3rem;
   }
 
   .value p {
     color: var(--ink-soft);
     margin: 0;
+    font-size: var(--step--1);
   }
 
+  /* Säulen */
+  .pillar {
+    text-decoration: none;
+    color: inherit;
+    transition:
+      border-color 0.25s var(--ease),
+      box-shadow 0.25s var(--ease);
+  }
+
+  .pillar h3 {
+    margin-top: var(--space-s);
+  }
+
+  .pillar:hover {
+    border-color: var(--blue-soft);
+    box-shadow: var(--shadow);
+    color: inherit;
+  }
+
+  .pillar__more {
+    margin-top: auto;
+    padding-top: var(--space-m);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5em;
+    color: var(--blue);
+    font-weight: 600;
+    font-size: var(--step--1);
+  }
+
+  .pillar__more :global(svg) {
+    width: 1em;
+    height: 1em;
+    transition: transform 0.25s var(--ease);
+  }
+
+  .pillar:hover .pillar__more :global(svg) {
+    transform: translateX(4px);
+  }
+
+  /* Haltung */
   .approach__inner {
     display: grid;
-    gap: var(--space-xl);
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+    gap: var(--space-l);
     align-items: start;
-  }
-
-  .approach__head {
-    position: sticky;
-    top: 6rem;
   }
 
   .approach__list {
@@ -184,26 +186,21 @@ const { home, values } = site;
     margin: 0;
     padding: 0;
     display: grid;
-    gap: var(--space-m);
+    gap: var(--space-s);
   }
 
   .approach__item {
     display: grid;
-    grid-template-columns: 3rem 1fr;
+    grid-template-columns: auto 1fr;
     gap: var(--space-s);
-    padding-bottom: var(--space-m);
-    border-bottom: 1px solid color-mix(in srgb, var(--ink) 10%, transparent);
+    padding: var(--space-m);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-l);
+    background: var(--white);
   }
 
-  .approach__item:last-child {
-    border-bottom: 0;
-  }
-
-  .approach__num {
-    font-family: var(--font-serif);
-    font-size: var(--step-2);
-    color: var(--gold);
-    line-height: 1.1;
+  .approach__item h3 {
+    margin-bottom: 0.25rem;
   }
 
   .approach__item p {
@@ -211,24 +208,36 @@ const { home, values } = site;
     margin: 0;
   }
 
+  @media (min-width: 48rem) {
+    .approach__inner {
+      grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+      gap: var(--space-xl);
+    }
+
+    .approach__head {
+      position: sticky;
+      top: 6rem;
+    }
+  }
+
+  /* Über mich Teaser */
   .about__inner {
     display: grid;
-    gap: var(--space-xl);
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+    gap: var(--space-l);
     align-items: center;
   }
 
   .about__figure {
     margin: 0;
-    max-width: 26rem;
+    max-width: 24rem;
     position: relative;
   }
 
   .about__figure::before {
     content: "";
     position: absolute;
-    inset: 1.25rem -1.25rem -1.25rem 1.25rem;
-    border: 1px solid var(--gold);
+    inset: 1rem -1rem -1rem 1rem;
+    background: var(--warm-tint);
     border-radius: var(--radius-l);
     z-index: -1;
   }
@@ -237,12 +246,18 @@ const { home, values } = site;
     width: 100%;
     height: auto;
     border-radius: var(--radius-l);
-    box-shadow: var(--shadow);
   }
 
   .about__credentials {
     color: var(--ink-muted);
     font-size: var(--step--1);
     margin-bottom: var(--space-m);
+  }
+
+  @media (min-width: 48rem) {
+    .about__inner {
+      grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+      gap: var(--space-xl);
+    }
   }
 </style>

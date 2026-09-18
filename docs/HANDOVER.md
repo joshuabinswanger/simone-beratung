@@ -11,8 +11,9 @@ technisch betreut. Für reine Textänderungen genügt
 2. Sprache: **TypeScript** (Astro-Komponenten, Konfiguration), reines **CSS**
    (keine Frameworks wie Tailwind oder Bootstrap).
 3. **GSAP** animiert nur die wechselnden Wörter im Titelbereich der Startseite;
-   respektiert `prefers-reduced-motion` (keine Animation, falls im Betriebssystem
-   deaktiviert).
+   Linie und Einblenden sind reine CSS-Animationen. Alles respektiert
+   `prefers-reduced-motion`; die Scroll-Einblendungen laufen nur ab
+   Tablet-Breite, auf dem Handy ist alles sofort sichtbar.
 4. Seiten liegen in `src/pages/`, wiederverwendbare Bausteine in
    `src/components/`, das Grundgerüst (Kopf, `<head>`, Skip-Link) in
    `src/layouts/BaseLayout.astro`.
@@ -115,13 +116,17 @@ Farben (als CSS-Variablen definiert):
 
 | Variable | Hex | Verwendung |
 |---|---|---|
-| `--paper` | `#F6F3EC` | Hintergrund |
-| `--ink` | `#1B2430` | Haupttext |
-| `--teal` | `#2F5D5A` | Primärfarbe, Links, Linien |
-| `--gold` | `#C9A46A` | Akzentfarbe, sparsam eingesetzt |
-| `--mist` | `#E4E0D6` | Flächen, Trenner |
+| `--bg` | `#FFFFFF` | Hintergrund |
+| `--bg-soft` | `#F4F7FB` | abwechselnde, leicht getönte Abschnitte |
+| `--line` | `#E3E8F0` | Rahmen, Trenner |
+| `--ink` | `#16213A` | Haupttext |
+| `--ink-soft` / `--ink-muted` | `#485368` / `#76819A` | Nebentext |
+| `--blue` | `#2A5BD7` | Primärfarbe: Links, Buttons, Nummern |
+| `--blue-tint` | `#E9F0FC` | helle blaue Flächen (z. B. Kontakt-Block) |
+| `--warm` | `#E38B5A` | warmer Akzent (Apricot), sparsam eingesetzt |
+| `--warm-tint` | `#FDEEE4` | helle warme Fläche hinter dem Porträt |
 
-Schriften: **Fraunces** (Überschriften) und **Inter** (Fliesstext), beide als
+Schriften: **Manrope** (Überschriften) und **Inter** (Fliesstext), beide als
 Variable Fonts selbst gehostet über `@fontsource-variable` – kein Google-Fonts-
 Aufruf, keine externe Anfrage.
 

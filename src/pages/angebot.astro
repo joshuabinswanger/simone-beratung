@@ -21,7 +21,7 @@ const rendered = await Promise.all(
       {rendered.map(({ entry, Content }, i) => (
         <article class="offer reveal" id={entry.id}>
           <div class="offer__head">
-            <span class="card__num">0{i + 1}</span>
+            <span class="num">0{i + 1}</span>
             <h2>{entry.data.title}</h2>
             <p class="lead">{entry.data.summary}</p>
           </div>
@@ -43,7 +43,7 @@ const rendered = await Promise.all(
   </section>
 
   <!-- Formate & Zielgruppen -->
-  <section class="section section--paper-deep" aria-labelledby="formats-title">
+  <section class="section section--soft" aria-labelledby="formats-title">
     <div class="wrap formats">
       <div class="reveal">
         <p class="eyebrow">Formate</p>
@@ -81,23 +81,23 @@ const rendered = await Promise.all(
       </div>
       <ul class="topics__list reveal">
         {angebot.topics.map((t) => (
-          <li>{t}</li>
+          <li class="pill">{t}</li>
         ))}
       </ul>
     </div>
   </section>
 
   <!-- Ablauf -->
-  <section class="section section--paper-deep" aria-labelledby="process-title">
+  <section class="section section--soft" aria-labelledby="process-title">
     <div class="wrap">
-      <p class="eyebrow reveal">Ablauf</p>
-      <h2 id="process-title" class="reveal">
-        {angebot.processTitle}
-      </h2>
+      <div class="reveal">
+        <p class="eyebrow">Ablauf</p>
+        <h2 id="process-title">{angebot.processTitle}</h2>
+      </div>
       <ol class="process">
         {angebot.process.map((step, i) => (
-          <li class="process__step reveal">
-            <span class="process__num">{String(i + 1).padStart(2, "0")}</span>
+          <li class="process__step card reveal">
+            <span class="num num--warm">{String(i + 1).padStart(2, "0")}</span>
             <h3>{step.title}</h3>
             <p>{step.text}</p>
           </li>
@@ -116,10 +116,9 @@ const rendered = await Promise.all(
 <style>
   .offer {
     display: grid;
-    gap: var(--space-l);
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+    gap: var(--space-m);
     padding-block: var(--space-xl);
-    border-top: 1px solid color-mix(in srgb, var(--ink) 10%, transparent);
+    border-top: 1px solid var(--line);
     scroll-margin-top: 6rem;
   }
 
@@ -129,22 +128,19 @@ const rendered = await Promise.all(
   }
 
   .offer__head h2 {
-    margin-top: var(--space-xs);
+    margin-top: var(--space-s);
     max-width: 16ch;
   }
 
-  .offer__head {
-    position: sticky;
-    top: 6rem;
-    align-self: start;
+  .offer__head .lead {
+    margin: 0;
   }
 
   .offer__highlights {
     list-style: none;
     margin: var(--space-m) 0 0;
     padding: var(--space-m);
-    background: var(--white);
-    border: 1px solid color-mix(in srgb, var(--ink) 8%, transparent);
+    background: var(--bg-soft);
     border-radius: var(--radius-l);
     display: grid;
     gap: 0.5rem;
@@ -160,10 +156,24 @@ const rendered = await Promise.all(
     content: "";
     position: absolute;
     left: 0;
-    top: 0.75em;
-    width: 0.8em;
-    height: 1px;
-    background: var(--gold);
+    top: 0.6em;
+    width: 0.5em;
+    height: 0.5em;
+    border-radius: 2px;
+    background: var(--warm);
+  }
+
+  @media (min-width: 48rem) {
+    .offer {
+      grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+      gap: var(--space-xl);
+    }
+
+    .offer__head {
+      position: sticky;
+      top: 6rem;
+      align-self: start;
+    }
   }
 
   .formats {
@@ -181,7 +191,7 @@ const rendered = await Promise.all(
   }
 
   .audiences li {
-    border-top: 1px solid var(--gold);
+    border-top: 2px solid var(--blue-soft);
     padding-top: var(--space-s);
   }
 
@@ -197,8 +207,13 @@ const rendered = await Promise.all(
   .topics {
     display: grid;
     gap: var(--space-l);
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
     align-items: start;
+  }
+
+  @media (min-width: 48rem) {
+    .topics {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+    }
   }
 
   .topics__list {
@@ -211,12 +226,7 @@ const rendered = await Promise.all(
   }
 
   .topics__list li {
-    padding: 0.55em 1em;
-    border: 1px solid color-mix(in srgb, var(--teal) 35%, transparent);
-    border-radius: 999px;
-    color: var(--teal-deep);
-    background: var(--white);
-    font-size: var(--step--1);
+    max-width: none;
   }
 
   .process {
@@ -226,31 +236,16 @@ const rendered = await Promise.all(
     display: grid;
     gap: var(--space-m);
     grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
-    counter-reset: step;
   }
 
-  .process__step {
-    padding-top: var(--space-s);
-    border-top: 1px solid color-mix(in srgb, var(--ink) 15%, transparent);
-  }
-
-  .process__num {
-    display: block;
-    font-family: var(--font-serif);
-    font-size: var(--step-2);
-    color: var(--gold);
-    margin-bottom: 0.4rem;
-  }
-
-  .process__step p {
-    color: var(--ink-soft);
-    margin: 0;
+  .process__step h3 {
+    margin-top: var(--space-s);
   }
 
   .costs {
-    margin-top: var(--space-xl);
+    margin-top: var(--space-l);
     padding: var(--space-m) var(--space-l);
-    border-left: 2px solid var(--gold);
+    border-left: 3px solid var(--warm);
     background: var(--white);
     border-radius: 0 var(--radius-l) var(--radius-l) 0;
     max-width: 48rem;

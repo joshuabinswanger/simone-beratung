@@ -42,12 +42,12 @@ const { ueberMich } = site;
   </section>
 
   <!-- Haltung -->
-  <section class="section section--paper-deep" aria-labelledby="haltung-title">
+  <section class="section section--soft" aria-labelledby="haltung-title">
     <div class="wrap">
-      <p class="eyebrow reveal">Haltung</p>
-      <h2 id="haltung-title" class="reveal">
-        {ueberMich.haltung.title}
-      </h2>
+      <div class="reveal">
+        <p class="eyebrow">Haltung</p>
+        <h2 id="haltung-title">{ueberMich.haltung.title}</h2>
+      </div>
       <div class="grid grid--3 haltung">
         {ueberMich.haltung.points.map((pt) => (
           <div class="card reveal">
@@ -67,7 +67,7 @@ const { ueberMich } = site;
         <h2 id="stations-title">{werdegang.stationsTitle}</h2>
         <ol class="timeline">
           {werdegang.stations.map((s) => (
-            <li class="timeline__item reveal">
+            <li class="timeline__item">
               <span class="timeline__years">{s.from === s.to ? s.from : `${s.from}–${s.to}`}</span>
               <div>
                 <h3>{s.role}</h3>
@@ -105,23 +105,19 @@ const { ueberMich } = site;
 <style>
   .bio__inner {
     display: grid;
-    gap: var(--space-xl);
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+    gap: var(--space-l);
     align-items: start;
   }
 
   .bio__figure {
     margin: 0;
-    max-width: 24rem;
-    position: sticky;
-    top: 6rem;
+    max-width: 22rem;
   }
 
   .bio__img {
     width: 100%;
     height: auto;
     border-radius: var(--radius-l);
-    box-shadow: var(--shadow);
   }
 
   .bio__figure figcaption {
@@ -133,9 +129,21 @@ const { ueberMich } = site;
 
   .bio__figure strong {
     color: var(--ink);
-    font-family: var(--font-serif);
+    font-family: var(--font-head);
+    font-weight: 600;
     font-size: var(--step-0);
-    font-weight: 400;
+  }
+
+  @media (min-width: 48rem) {
+    .bio__inner {
+      grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+      gap: var(--space-xl);
+    }
+
+    .bio__figure {
+      position: sticky;
+      top: 6rem;
+    }
   }
 
   .bio__text p:first-child {
@@ -146,17 +154,19 @@ const { ueberMich } = site;
 
   .bio__languages {
     margin-top: var(--space-m);
-    padding-top: var(--space-s);
-    border-top: 1px solid var(--gold);
+    padding: var(--space-s) var(--space-m);
+    background: var(--bg-soft);
+    border-radius: var(--radius);
     color: var(--ink-soft);
   }
 
   .bio__label {
     display: block;
     text-transform: uppercase;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.06em;
     font-size: 0.75rem;
-    color: var(--teal);
+    font-weight: 600;
+    color: var(--blue);
     margin-bottom: 0.25rem;
   }
 
@@ -183,21 +193,22 @@ const { ueberMich } = site;
     grid-template-columns: 7rem 1fr;
     gap: var(--space-s);
     padding-block: var(--space-s);
-    border-top: 1px solid color-mix(in srgb, var(--ink) 10%, transparent);
+    border-top: 1px solid var(--line);
   }
 
   .timeline__years {
     font-variant-numeric: tabular-nums;
-    color: var(--teal);
-    font-weight: 500;
+    color: var(--blue);
+    font-weight: 600;
     font-size: var(--step--1);
     padding-top: 0.25rem;
   }
 
   .timeline__item h3 {
     font-family: var(--font-sans);
-    font-weight: 500;
+    font-weight: 600;
     font-size: var(--step-0);
+    letter-spacing: 0;
     margin-bottom: 0.15rem;
   }
 
@@ -217,19 +228,21 @@ const { ueberMich } = site;
     grid-template-columns: 4rem 1fr;
     gap: var(--space-s);
     padding-block: var(--space-s);
-    border-top: 1px solid color-mix(in srgb, var(--ink) 10%, transparent);
+    border-top: 1px solid var(--line);
     font-size: var(--step--1);
   }
 
   .education__year {
-    color: var(--gold);
-    font-family: var(--font-serif);
+    color: var(--warm-deep);
+    font-family: var(--font-head);
+    font-weight: 700;
     font-size: var(--step-0);
+    font-variant-numeric: tabular-nums;
   }
 
   .education strong {
     display: block;
-    font-weight: 500;
+    font-weight: 600;
     color: var(--ink);
   }
 

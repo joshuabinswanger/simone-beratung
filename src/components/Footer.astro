@@ -53,19 +53,20 @@ const tel = site.contact.phone.replace(/\s+/g, "");
 
 <style>
   .footer {
-    background: var(--ink);
-    color: color-mix(in srgb, var(--paper) 78%, transparent);
+    background: var(--bg-soft);
+    color: var(--ink-soft);
+    border-top: 1px solid var(--line);
     padding-block: var(--space-xl) var(--space-m);
     font-size: var(--step--1);
   }
 
   .footer a {
-    color: var(--paper);
-    text-decoration-color: color-mix(in srgb, var(--gold) 50%, transparent);
+    color: var(--ink);
+    text-decoration-color: var(--line-strong);
   }
 
   .footer a:hover {
-    color: var(--gold);
+    color: var(--blue);
   }
 
   .footer__inner {
@@ -73,7 +74,7 @@ const tel = site.contact.phone.replace(/\s+/g, "");
     gap: var(--space-l);
     grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
     padding-bottom: var(--space-l);
-    border-bottom: 1px solid color-mix(in srgb, var(--paper) 14%, transparent);
+    border-bottom: 1px solid var(--line);
   }
 
   .footer p {
@@ -81,16 +82,16 @@ const tel = site.contact.phone.replace(/\s+/g, "");
   }
 
   .footer__name {
-    font-family: var(--font-serif);
+    font-family: var(--font-head);
+    font-weight: 700;
     font-size: var(--step-1);
-    color: var(--paper);
-    font-variation-settings:
-      "opsz" 48,
-      "SOFT" 40;
+    color: var(--ink);
+    letter-spacing: -0.02em;
   }
 
   .footer__credentials {
-    color: var(--gold);
+    color: var(--blue);
+    font-weight: 500;
   }
 
   .footer__note {
@@ -100,9 +101,10 @@ const tel = site.contact.phone.replace(/\s+/g, "");
 
   .footer__label {
     text-transform: uppercase;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.06em;
     font-size: 0.75rem;
-    color: var(--gold);
+    font-weight: 600;
+    color: var(--ink-muted);
     margin-bottom: 0.75rem;
   }
 
@@ -120,6 +122,6 @@ const tel = site.contact.phone.replace(/\s+/g, "");
 
   .footer__bottom {
     padding-top: var(--space-m);
-    color: color-mix(in srgb, var(--paper) 55%, transparent);
+    color: var(--ink-muted);
   }
 </style>

@@ -47,10 +47,10 @@ Navigation: Start · Angebot · Über mich · Kontakt. Footer: Name, Ort, E-Mail
 
 - **Ton:** ruhig, klar, professionell, warm; keine Esoterik-Klischees, keine Stockfoto-Optik.
   Sie-Form gegenüber Besucherinnen und Besuchern, Ich-Form für Simone.
-- **Farben:** Papier `#F6F3EC` (Hintergrund), Tinte `#1B2430` (Text), Tiefes Petrol
-  `#2F5D5A` (Primär, Links, Linie), Gold-Ocker `#C9A46A` (Akzent, sparsam), Nebel `#E4E0D6`
-  (Flächen/Trenner). Kontrast mindestens WCAG AA.
-- **Typografie:** Fraunces (variable Serif) für Überschriften, Inter (variable) für Fliesstext.
+- **Farben (Stand 18.09.2026):** Weiss `#FFFFFF` (Hintergrund), sehr helles Blaugrau `#F4F7FB`
+  (abwechselnde Abschnitte), Tinte `#16213A` (Text), Blau `#2A5BD7` (Primär, Links, Linie),
+  Apricot `#E38B5A` (warmer Akzent, sparsam). Hell und ruhig, keine dunklen Blöcke.
+- **Typografie:** Manrope (variable Sans, Überschriften), Inter (variable, Fliesstext).
   Selbst gehostet über `@fontsource-variable` (kein Google-Fonts-Request, Datenschutz).
 - **Hero-Animation:** organisch geschwungener SVG-Pfad, der beim Laden gezeichnet wird und
   langsam atmet; darauf wechselnde Begriffe (z. B. Klarheit · Orientierung · Begleitung ·

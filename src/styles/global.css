@@ -1,38 +1,42 @@
 /* ==========================================================================
    Gestaltungssystem – Simone Binswanger
    Farben, Typografie, Abstände als Custom Properties. Alles weitere baut
-   auf diesen Tokens auf.
+   auf diesen Tokens auf. Grundton: Weiss, Blau als Primärfarbe, ein warmer
+   Akzent (Apricot) sparsam eingesetzt.
    ========================================================================== */
 
-@import "@fontsource-variable/fraunces/index.css";
+@import "@fontsource-variable/manrope/index.css";
 @import "@fontsource-variable/inter/index.css";
 
 :root {
   /* Farben */
-  --paper: #f6f3ec;
-  --paper-deep: #efeae0;
-  --mist: #e4e0d6;
-  --ink: #1b2430;
-  --ink-soft: #46505c;
-  --ink-muted: #6b7480;
-  --teal: #2f5d5a;
-  --teal-deep: #234745;
-  --teal-tint: #dfe8e5;
-  --gold: #c9a46a;
-  --gold-soft: #e8d9bd;
-  --white: #fffdf8;
+  --white: #ffffff;
+  --bg: #ffffff;
+  --bg-soft: #f4f7fb;
+  --line: #e3e8f0;
+  --line-strong: #c9d3e0;
+  --ink: #16213a;
+  --ink-soft: #485368;
+  --ink-muted: #76819a;
+  --blue: #2a5bd7;
+  --blue-deep: #1e46ad;
+  --blue-tint: #e9f0fc;
+  --blue-soft: #c8d8f6;
+  --warm: #e38b5a;
+  --warm-deep: #c96f3d;
+  --warm-tint: #fdeee4;
 
   /* Typografie */
-  --font-serif: "Fraunces Variable", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+  --font-head: "Manrope Variable", "Segoe UI", system-ui, -apple-system, sans-serif;
   --font-sans: "Inter Variable", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
 
   --step--1: clamp(0.85rem, 0.82rem + 0.15vw, 0.94rem);
-  --step-0: clamp(1rem, 0.96rem + 0.22vw, 1.125rem);
-  --step-1: clamp(1.2rem, 1.12rem + 0.4vw, 1.4rem);
-  --step-2: clamp(1.45rem, 1.3rem + 0.75vw, 1.85rem);
-  --step-3: clamp(1.85rem, 1.55rem + 1.5vw, 2.6rem);
-  --step-4: clamp(2.4rem, 1.8rem + 3vw, 4rem);
-  --step-5: clamp(2.9rem, 2rem + 4.5vw, 5.4rem);
+  --step-0: clamp(1rem, 0.96rem + 0.22vw, 1.1rem);
+  --step-1: clamp(1.15rem, 1.08rem + 0.35vw, 1.3rem);
+  --step-2: clamp(1.4rem, 1.25rem + 0.7vw, 1.75rem);
+  --step-3: clamp(1.75rem, 1.45rem + 1.4vw, 2.4rem);
+  --step-4: clamp(2.2rem, 1.7rem + 2.6vw, 3.4rem);
+  --step-5: clamp(2.6rem, 1.9rem + 3.8vw, 4.6rem);
 
   /* Abstände */
   --space-xs: 0.5rem;
@@ -40,14 +44,14 @@
   --space-m: 1.5rem;
   --space-l: 2.5rem;
   --space-xl: 4rem;
-  --space-2xl: clamp(4rem, 3rem + 5vw, 7.5rem);
+  --space-2xl: clamp(3.5rem, 2.5rem + 4.5vw, 6.5rem);
 
   --measure: 62ch;
   --content: 72rem;
   --gutter: clamp(1.25rem, 4vw, 3rem);
-  --radius: 4px;
-  --radius-l: 10px;
-  --shadow: 0 1px 2px rgb(27 36 48 / 0.06), 0 12px 32px -12px rgb(27 36 48 / 0.18);
+  --radius: 8px;
+  --radius-l: 16px;
+  --shadow: 0 1px 2px rgb(22 33 58 / 0.04), 0 16px 40px -20px rgb(22 33 58 / 0.18);
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
@@ -72,13 +76,14 @@ html {
 
 body {
   margin: 0;
-  background: var(--paper);
+  background: var(--bg);
   color: var(--ink);
   font-family: var(--font-sans);
   font-size: var(--step-0);
-  line-height: 1.6;
+  line-height: 1.65;
   font-feature-settings: "kern", "liga", "calt";
   -webkit-font-smoothing: antialiased;
+  overflow-x: clip;
 }
 
 img,
@@ -92,20 +97,18 @@ h1,
 h2,
 h3,
 h4 {
-  font-family: var(--font-serif);
-  font-weight: 400;
-  line-height: 1.12;
-  letter-spacing: -0.01em;
+  font-family: var(--font-head);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
   margin: 0 0 var(--space-s);
   text-wrap: balance;
-  font-variation-settings:
-    "opsz" 144,
-    "SOFT" 30,
-    "WONK" 0;
+  color: var(--ink);
 }
 
 h1 {
   font-size: var(--step-4);
+  letter-spacing: -0.03em;
 }
 h2 {
   font-size: var(--step-3);
@@ -113,6 +116,7 @@ h2 {
 h3 {
   font-size: var(--step-1);
   line-height: 1.3;
+  letter-spacing: -0.01em;
 }
 
 p,
@@ -128,29 +132,29 @@ li {
 }
 
 a {
-  color: var(--teal);
+  color: var(--blue);
   text-decoration: underline;
   text-decoration-thickness: 1px;
   text-underline-offset: 0.18em;
-  text-decoration-color: color-mix(in srgb, var(--teal) 45%, transparent);
+  text-decoration-color: color-mix(in srgb, var(--blue) 40%, transparent);
   transition:
     color 0.2s var(--ease),
     text-decoration-color 0.2s var(--ease);
 }
 
 a:hover {
-  color: var(--teal-deep);
+  color: var(--blue-deep);
   text-decoration-color: currentColor;
 }
 
 :focus-visible {
-  outline: 2px solid var(--teal);
+  outline: 2px solid var(--blue);
   outline-offset: 3px;
-  border-radius: 2px;
+  border-radius: 4px;
 }
 
 ::selection {
-  background: var(--gold-soft);
+  background: var(--blue-soft);
   color: var(--ink);
 }
 
@@ -168,51 +172,40 @@ a:hover {
   padding-block: var(--space-xl);
 }
 
-.section--paper-deep {
-  background: var(--paper-deep);
+.section--soft {
+  background: var(--bg-soft);
 }
 
-.section--ink {
-  background: var(--ink);
-  color: var(--paper);
+.section--blue {
+  background: var(--blue-tint);
 }
 
-.section--ink a {
-  color: var(--gold);
-}
-
+/* Abschnitts-Kopf: Eyebrow + Titel, überall gleich */
 .eyebrow {
   display: inline-flex;
   align-items: center;
   gap: 0.6em;
   font-size: var(--step--1);
-  font-weight: 500;
-  letter-spacing: 0.08em;
+  font-weight: 600;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--teal);
+  color: var(--blue);
   margin-bottom: var(--space-s);
 }
 
 .eyebrow::before {
   content: "";
-  width: 1.6em;
-  height: 1px;
-  background: var(--gold);
-}
-
-.section--ink .eyebrow {
-  color: var(--gold);
+  width: 0.5em;
+  height: 0.5em;
+  border-radius: 2px;
+  background: var(--warm);
 }
 
 .lead {
   font-size: var(--step-1);
-  line-height: 1.5;
+  line-height: 1.55;
   color: var(--ink-soft);
-  max-width: 48ch;
-}
-
-.section--ink .lead {
-  color: color-mix(in srgb, var(--paper) 80%, transparent);
+  max-width: 50ch;
 }
 
 .prose {
@@ -228,10 +221,6 @@ a:hover {
   margin-top: var(--space-m);
 }
 
-.prose p + p {
-  margin-top: 0;
-}
-
 .prose ul {
   padding-left: 1.2em;
 }
@@ -241,7 +230,7 @@ a:hover {
 }
 
 .prose li::marker {
-  color: var(--gold);
+  color: var(--warm);
 }
 
 /* Buttons */
@@ -249,39 +238,37 @@ a:hover {
   display: inline-flex;
   align-items: center;
   gap: 0.6em;
-  padding: 0.85em 1.5em;
+  padding: 0.9em 1.5em;
   border-radius: 999px;
   font-family: var(--font-sans);
-  font-weight: 500;
-  font-size: var(--step-0);
+  font-weight: 600;
+  font-size: var(--step--1);
   line-height: 1;
   text-decoration: none;
   border: 1px solid transparent;
+  cursor: pointer;
   transition:
-    background 0.25s var(--ease),
-    color 0.25s var(--ease),
-    border-color 0.25s var(--ease),
-    transform 0.25s var(--ease);
-}
-
-.btn:hover {
-  transform: translateY(-1px);
+    background 0.2s var(--ease),
+    color 0.2s var(--ease),
+    border-color 0.2s var(--ease),
+    box-shadow 0.2s var(--ease);
 }
 
 .btn--primary {
-  background: var(--teal);
+  background: var(--blue);
   color: var(--white);
+  box-shadow: 0 8px 20px -12px rgb(42 91 215 / 0.7);
 }
 
 .btn--primary:hover {
-  background: var(--teal-deep);
+  background: var(--blue-deep);
   color: var(--white);
 }
 
 .btn--ghost {
-  background: transparent;
+  background: var(--white);
   color: var(--ink);
-  border-color: color-mix(in srgb, var(--ink) 25%, transparent);
+  border-color: var(--line-strong);
 }
 
 .btn--ghost:hover {
@@ -289,24 +276,27 @@ a:hover {
   color: var(--ink);
 }
 
-.section--ink .btn--ghost {
-  color: var(--paper);
-  border-color: color-mix(in srgb, var(--paper) 40%, transparent);
-}
-
-.section--ink .btn--ghost:hover {
-  border-color: var(--paper);
-  color: var(--paper);
-}
-
 .btn svg {
-  width: 1em;
-  height: 1em;
+  width: 1.1em;
+  height: 1.1em;
   transition: transform 0.25s var(--ease);
 }
 
 .btn:hover svg {
   transform: translateX(3px);
+}
+
+/* Kleine Pillen (Themen, Tags) */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.5em 0.95em;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--white);
+  color: var(--ink-soft);
+  font-size: var(--step--1);
+  font-weight: 500;
 }
 
 /* Karten-Raster */
@@ -325,10 +315,9 @@ a:hover {
 
 .card {
   background: var(--white);
-  border: 1px solid color-mix(in srgb, var(--ink) 8%, transparent);
+  border: 1px solid var(--line);
   border-radius: var(--radius-l);
   padding: var(--space-m) var(--space-m) var(--space-l);
-  box-shadow: var(--shadow);
   display: flex;
   flex-direction: column;
   gap: var(--space-xs);
@@ -343,14 +332,26 @@ a:hover {
   margin: 0;
 }
 
-.card__num {
-  font-family: var(--font-serif);
-  font-size: var(--step-2);
-  color: var(--gold);
-  line-height: 1;
-  font-variation-settings:
-    "opsz" 144,
-    "SOFT" 100;
+/* Nummern-Marke: kleines Quadrat mit Ziffer */
+.num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 10px;
+  background: var(--blue-tint);
+  color: var(--blue);
+  font-family: var(--font-head);
+  font-weight: 700;
+  font-size: var(--step--1);
+  letter-spacing: 0;
+  flex: none;
+}
+
+.num--warm {
+  background: var(--warm-tint);
+  color: var(--warm-deep);
 }
 
 /* Sichtbar nur für Screenreader */
@@ -364,24 +365,20 @@ a:hover {
   white-space: nowrap;
 }
 
-/* Einblend-Animation beim Scrollen (JS setzt .is-visible) */
-.reveal {
-  opacity: 0;
-  transform: translateY(18px);
-  transition:
-    opacity 0.7s var(--ease),
-    transform 0.7s var(--ease);
-}
-
-.reveal.is-visible {
-  opacity: 1;
-  transform: none;
-}
-
-@media (prefers-reduced-motion: reduce) {
+/* Einblend-Animation beim Scrollen (JS setzt .is-visible).
+   Nur ab Tablet-Breite und ohne reduced-motion; auf dem Handy ist alles
+   sofort sichtbar, damit nichts hinterherhinkt. */
+@media (min-width: 48rem) and (prefers-reduced-motion: no-preference) {
   .reveal {
+    opacity: 0;
+    transform: translateY(12px);
+    transition:
+      opacity 0.55s var(--ease),
+      transform 0.55s var(--ease);
+  }
+
+  .reveal.is-visible {
     opacity: 1;
     transform: none;
-    transition: none;
   }
 }

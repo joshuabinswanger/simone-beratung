@@ -20,13 +20,8 @@ const { eyebrow, title, lead } = Astro.props;
 <style>
   .intro {
     padding-block: var(--space-xl) var(--space-l);
-    background:
-      radial-gradient(
-        50% 60% at 90% 0%,
-        color-mix(in srgb, var(--gold-soft) 45%, transparent),
-        transparent 70%
-      ),
-      var(--paper);
+    background: var(--bg);
+    border-bottom: 1px solid var(--line);
   }
 
   .intro h1 {
@@ -35,5 +30,6 @@ const { eyebrow, title, lead } = Astro.props;
 
   .intro :global(.lead) {
     margin-top: var(--space-s);
+    margin-bottom: 0;
   }
 </style>

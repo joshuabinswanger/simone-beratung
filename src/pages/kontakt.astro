@@ -103,8 +103,13 @@ const hasForm = contact.formEndpoint.trim().length > 0;
   .contact__inner {
     display: grid;
     gap: var(--space-xl);
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
     align-items: start;
+  }
+
+  @media (min-width: 48rem) {
+    .contact__inner {
+      grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+    }
   }
 
   .contact__list {
@@ -125,17 +130,18 @@ const hasForm = contact.formEndpoint.trim().length > 0;
   .contact__list :global(svg) {
     width: 1.35rem;
     height: 1.35rem;
-    color: var(--gold);
+    color: var(--blue);
     margin-top: 0.15rem;
   }
 
   .contact__label {
     display: block;
     text-transform: uppercase;
-    letter-spacing: 0.08em;
     font-size: 0.75rem;
-    color: var(--teal);
+    color: var(--blue);
     margin-bottom: 0.15rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
   }
 
   .contact__line {
@@ -146,8 +152,8 @@ const hasForm = contact.formEndpoint.trim().length > 0;
   .contact__confidential {
     margin-top: var(--space-l);
     padding: var(--space-m);
-    border-left: 2px solid var(--gold);
-    background: var(--paper-deep);
+    border-left: 3px solid var(--warm);
+    background: var(--bg-soft);
     color: var(--ink-soft);
     border-radius: 0 var(--radius-l) var(--radius-l) 0;
   }
@@ -155,10 +161,9 @@ const hasForm = contact.formEndpoint.trim().length > 0;
   .contact__mail-card,
   .form {
     background: var(--white);
-    border: 1px solid color-mix(in srgb, var(--ink) 8%, transparent);
+    border: 1px solid var(--line);
     border-radius: var(--radius-l);
     padding: var(--space-l);
-    box-shadow: var(--shadow);
   }
 
   .contact__mail-card h2 {
@@ -189,18 +194,18 @@ const hasForm = contact.formEndpoint.trim().length > 0;
   .form textarea {
     font: inherit;
     padding: 0.75em 0.9em;
-    border: 1px solid color-mix(in srgb, var(--ink) 20%, transparent);
+    border: 1px solid var(--line-strong);
     border-radius: var(--radius);
-    background: var(--paper);
+    background: var(--white);
     color: var(--ink);
     width: 100%;
   }
 
   .form input:focus,
   .form textarea:focus {
-    outline: 2px solid var(--teal);
+    outline: 2px solid var(--blue);
     outline-offset: 1px;
-    border-color: var(--teal);
+    border-color: var(--blue);
   }
 
   .form button {
@@ -210,8 +215,8 @@ const hasForm = contact.formEndpoint.trim().length > 0;
   .form__success {
     margin: 0;
     padding: var(--space-s) var(--space-m);
-    background: var(--teal-tint);
-    color: var(--teal-deep);
+    background: var(--blue-tint);
+    color: var(--blue-deep);
     border-radius: var(--radius);
   }
 </style>

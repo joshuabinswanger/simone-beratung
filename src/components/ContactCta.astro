@@ -1,41 +1,50 @@
 ---
-/** Dunkler Abschluss-Block mit Kontakt-Aufruf, auf Start- und Angebotsseite. */
+/** Heller Abschluss-Block in Blau-Tönung mit Kontakt-Aufruf, auf Start- und Angebotsseite. */
 import { site } from "../lib/site";
 import { url } from "../lib/url";
 import Icon from "./Icon.astro";
 const { contactCta } = site.home;
 ---
 
-<section class="section section--ink cta">
-  <div class="wrap cta__inner reveal">
-    <div>
-      <p class="eyebrow">Kontakt</p>
-      <h2>{contactCta.title}</h2>
-      <p class="lead">{contactCta.text}</p>
-    </div>
-    <div class="cta__actions">
-      <a class="btn btn--primary cta__btn" href={url(contactCta.cta.href)}>
-        {contactCta.cta.label}
-        <Icon name="arrow" />
-      </a>
-      <a class="cta__mail" href={`mailto:${site.contact.email}`}>
-        <Icon name="mail" />
-        {site.contact.email}
-      </a>
+<section class="section cta">
+  <div class="wrap">
+    <div class="cta__box reveal">
+      <div>
+        <p class="eyebrow">Kontakt</p>
+        <h2>{contactCta.title}</h2>
+        <p class="lead">{contactCta.text}</p>
+      </div>
+      <div class="cta__actions">
+        <a class="btn btn--primary" href={url(contactCta.cta.href)}>
+          {contactCta.cta.label}
+          <Icon name="arrow" />
+        </a>
+        <a class="cta__mail" href={`mailto:${site.contact.email}`}>
+          <Icon name="mail" />
+          {site.contact.email}
+        </a>
+      </div>
     </div>
   </div>
 </section>
 
 <style>
-  .cta__inner {
+  .cta__box {
+    background: var(--blue-tint);
+    border-radius: var(--radius-l);
+    padding: clamp(1.75rem, 2vw + 1rem, 3.5rem);
     display: grid;
     gap: var(--space-l);
-    align-items: end;
+    align-items: center;
     grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
   }
 
   .cta h2 {
     max-width: 20ch;
+  }
+
+  .cta .lead {
+    margin: 0;
   }
 
   .cta__actions {
@@ -45,27 +54,24 @@ const { contactCta } = site.home;
     gap: var(--space-m);
   }
 
-  .cta__btn {
-    background: var(--gold);
-    color: var(--ink);
-  }
-
-  .cta__btn:hover {
-    background: var(--gold-soft);
-    color: var(--ink);
+  @media (min-width: 48rem) {
+    .cta__actions {
+      align-items: flex-end;
+    }
   }
 
   .cta__mail {
     display: inline-flex;
     align-items: center;
     gap: 0.6em;
-    color: var(--paper);
-    text-decoration-color: color-mix(in srgb, var(--gold) 50%, transparent);
+    color: var(--ink);
+    font-weight: 500;
+    text-decoration-color: var(--blue-soft);
   }
 
   .cta__mail :global(svg) {
     width: 1.1em;
     height: 1.1em;
-    color: var(--gold);
+    color: var(--blue);
   }
 </style>

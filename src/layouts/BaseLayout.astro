@@ -48,7 +48,7 @@ const jsonLd = {
     <link rel="canonical" href={canonical} />
     <link rel="icon" type="image/svg+xml" href={url("/favicon.svg")} />
     <link rel="apple-touch-icon" href={url("/apple-touch-icon.png")} />
-    <meta name="theme-color" content="#f6f3ec" />
+    <meta name="theme-color" content="#ffffff" />
     <meta name="generator" content={Astro.generator} />
     <link rel="sitemap" href={url("/sitemap-index.xml")} />
 
@@ -74,11 +74,16 @@ const jsonLd = {
     <Footer />
 
     <script>
-      // Sanftes Einblenden von .reveal-Elementen beim Scrollen
+      // Sanftes Einblenden von .reveal-Elementen beim Scrollen – nur ab
+      // Tablet-Breite und ohne reduced-motion (siehe global.css). Sonst ist
+      // alles sofort sichtbar.
       const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-      const items = document.querySelectorAll<HTMLElement>(".reveal");
-      if (reduce || !("IntersectionObserver" in window)) {
-        items.forEach((el) => el.classList.add("is-visible"));
+      const wide = window.matchMedia("(min-width: 48rem)").matches;
+      const items = Array.from(document.querySelectorAll<HTMLElement>(".reveal"));
+      const showAll = () => items.forEach((el) => el.classList.add("is-visible"));
+
+      if (reduce || !wide || !("IntersectionObserver" in window)) {
+        showAll();
       } else {
         const io = new IntersectionObserver(
           (entries) => {
@@ -89,12 +94,26 @@ const jsonLd = {
               }
             }
           },
-          { rootMargin: "0px 0px -8% 0px", threshold: 0.1 },
+          { rootMargin: "0px 0px -6% 0px", threshold: 0.05 },
         );
-        items.forEach((el, i) => {
-          el.style.transitionDelay = `${Math.min(i % 4, 3) * 70}ms`;
+        items.forEach((el) => {
+          // Geschwister in derselben Gruppe leicht staffeln, sonst kein Versatz
+          const siblings = Array.from(el.parentElement?.children ?? []).filter((c) =>
+            c.classList.contains("reveal"),
+          );
+          const idx = siblings.indexOf(el);
+          el.style.transitionDelay = `${Math.min(Math.max(idx, 0), 3) * 60}ms`;
           io.observe(el);
         });
+        // Sicherheitsnetz: Was nach dem Laden im Sichtbereich liegt, wird
+        // spätestens nach einer Sekunde eingeblendet.
+        window.setTimeout(() => {
+          items.forEach((el) => {
+            if (el.getBoundingClientRect().top < window.innerHeight) {
+              el.classList.add("is-visible");
+            }
+          });
+        }, 1000);
       }
     </script>
   </body>
@@ -108,7 +127,7 @@ const jsonLd = {
     z-index: 100;
     padding: 0.6rem 1rem;
     background: var(--ink);
-    color: var(--paper);
+    color: var(--white);
     border-radius: var(--radius);
     text-decoration: none;
   }
